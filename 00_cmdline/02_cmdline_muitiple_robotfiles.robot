@@ -33,3 +33,10 @@ robot --test *Case02* temp    #运行Case02结尾的测试文件
 --exclude xxORyyORzz    # 匹配包含 tag 'xx'、'yy' 或 'zz' 中任意一个的测试。
 --include fooNOTbar     # 匹配包含 tag 'foo' 但不包含 tag 'bar' 的测试。
 --exclude xxNOTyyNOTzz  # 匹配包含 tag 'xx' 但不包含 tag 'yy' 或 tag 'zz' 的测试。
+
+
+# 4、声明临时环境变量    --export为shell命令，windows下不可用
+export ROBOT_OPTIONS="--outputdir results --tagdoc 'mytag:Example doc with spaces'"
+robot tests.robot
+export REBOT_OPTIONS="--reportbackground blue:red:yellow"
+rebot --name example output.xml

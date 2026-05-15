@@ -40,3 +40,6 @@ export ROBOT_OPTIONS="--outputdir results --tagdoc 'mytag:Example doc with space
 robot tests.robot
 export REBOT_OPTIONS="--reportbackground blue:red:yellow"
 rebot --name example output.xml
+
+# 5、参数文件语法
+robot --argumentfile /路径/参数文件.txt 测试套件.robot

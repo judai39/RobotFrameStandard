@@ -1,0 +1,6 @@
+# 这是一条注释，该文件存放命令行参数
+--doc This is an example (where "special characters" are ok)
+--metadata X:Values with spaces
+--variable Name:Hello,world!
+--include case
+--outputdir results

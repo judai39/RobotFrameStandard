@@ -1,7 +1,7 @@
 *** Variables ***
 ${message}    Variables节中的变量
 # 10、变量优先级
-# 命令行中的--variable    >>    *** Variables ***节    >>    settings中导入的Library或Resource    
+# 用例中声明的变量    >>    命令行中的--variable    >>    *** Variables ***节    >>    settings中导入的Library或Resource    
 # 此外，在测试执行期间设置的变量，在其作用域中，具有最高优先级，不会影响作用域之外的变量
 # 此外，像${TEMPDIR}这种内置变量具有所有变量中的最高优先级，不可被覆盖（原则上来说，这些变量象征着操作系统的一些默认值，不能被修改，即使可以修改，也不要去尝试修改）
 

@@ -63,6 +63,11 @@ ${PRIORITIES: dict[int,str]}    {3278:'Critical',4173:'High',5334:'High'}
 *** Test Cases ***
 CASE01
     Log To Console    ${longlonglenth}
+CASE02
+    # Log To Console    @{NAMES}    @{names}传递给log to console的是多个值，无法将其转化成stdout，可以使用${names}直接将list对象传递给logtoconsole
+    # Log可以处理@{names},允许接收
+    Log    @{NAMES}
+    Log To Console    ${NAMES}
 CASE03
     # 关于字典
     Log To Console    通过字典名.key可以直接访问value值${USERS.NAME2}

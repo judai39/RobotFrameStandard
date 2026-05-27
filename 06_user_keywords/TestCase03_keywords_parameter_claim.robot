@@ -30,12 +30,12 @@ ${${NAME}}    使用VAR定义列表占位用
     Log Many    ${req},${opt},&{named}
 
 仅限命名参数-普通参数放在可变数量参数之后
-    [Arguments]    @{varargs}    ${named}
+    [Arguments]    @{varargs}    ${named only}
     # 也可以使用[Arguments]    @{}    ${first}    ${second}    表示后续参数为仅限命名参数
-    Log Many    @{varargs}    ${named}
+    Log Many    @{varargs}    ${named only}
 仅限命名参数-可以与位置参数和自由命名参数一起使用
-    [Arguments]    @{varargs}    ${named only}    &{free named}
-    Log Many    @{varargs}    ${named only}    &{free named}
+    [Arguments]    ${value1}    ${value2}    ${named only}    &{free named}
+    Log Many    ${value1}    ${value2}    ${named only}    &{free named}
 
 
 
@@ -54,4 +54,7 @@ Case04
     Log To Console    ${other_num}
     # 像Case03中的@{other_num}，无法确认这些参数的位置，就可以使用自由命名参数来接受（毕竟本质是字典，相当于在参数末尾放了一个字典的壳子，让字典用“命名参数”的规则接收这些参数）
     自由命名参数-将会接收不匹配位置参数（或仅限命名参数）的命名参数    1    opt=3    namded=${other_num}    #1,3,{'namded': ['one', 'two']}
-    
+
+Case05
+    仅限命名参数-普通参数放在可变数量参数之后    1    2    3    named only=这是只能使用命名参数传入的参数
+    仅限命名参数-可以与位置参数和自由命名参数一起使用    1    2    named only=这是只能使用命名参数传入的参数    free value1=3    free value2=4

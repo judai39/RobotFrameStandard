@@ -10,8 +10,3 @@ RF框架会依次引入文件中的实例成员成为变量，如果类的内部
 
 类名模块名一致时，RF会尝试把类约束为一个“type”，RF在查找类文件中的实例对象将其放入Variables节中时，会遵循“type”的规则，变量名要和类名相同才会认为是这个类的实例对象
 类名模块名不一致时，RF会过滤掉类逻辑，而是直接寻找实例对象，将其直接传入Variables节中
-
-5.20、尝试在MyObject中加入实例对象、用例文件中：${OBJ}    Evaluate    MyObject.MyObject("nancy").eat("what")
-异常：'MyObject.MyObject("nancy").eat("what")' failed: NameError: name 'MyObject' is not defined nor importable as module
-MyObject不能视为一个模块名
-模块类中如果加入其他实例对象，那么它就不能成为一个模块类

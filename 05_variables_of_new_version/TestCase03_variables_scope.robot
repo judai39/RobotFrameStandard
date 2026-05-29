@@ -20,9 +20,11 @@ CASE10
 
 CASE11
     VAR    ${variables1}    CASE11用例中的变量    scope=Test
-    # 也可以使用Set Test Variable
+    # 也可以使用Set ${Scope} Variable
+    Set Test Variable    ${variables2}    CASE11用例中的变量
+    Set Suite Variable    ${variables3}    CASE11套件中的变量
     Keywords11
-
+    
     # -->查看settings中的Suite Setup和Suite Teardown
     # 套件初始化中创建的值，用例无法访问
     Log To Console    ${suite_setup_var}
@@ -31,6 +33,8 @@ CASE11
 *** Keywords ***
 Keywords11
     Log To Console    在关键字被调用后，关键字可以访问到调用该关键字的测试用例中的变量${variables1}
+    Log To Console    在关键字被调用后，关键字可以访问到调用该关键字的测试用例中的变量${variables2}
+    Log To Console    在关键字被调用后，关键字可以访问到调用该关键字的测试套件中的变量${variables3}
 
 套件初始化
     Log    执行套件初始化

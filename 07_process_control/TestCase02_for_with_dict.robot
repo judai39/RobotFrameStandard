@@ -1,5 +1,6 @@
 *** Variables ***
 &{DICT_SAMPLE}    a=ONE    b=TWO    c=THREE
+${${}}
 
 *** Keywords ***
 Keyword01
@@ -28,3 +29,13 @@ Keyword01
     END
 重复执行关键字--Repeat Keyword（频繁使用for太麻烦）
     Repeat Keyword    5    Keyword01    2    3
+
+同时遍历多个字典（使用多个值接收）--FOR IN ZIP
+    VAR    &{dictionary1}    option1=value1    option2=value2
+    VAR    &{dictionary1}    option1=value1
+    VAR    &{dictionary1}    option1=value1    option2=value2
+    FOR    ${option_iterator1}    ${option_iterator3}    ${option_iterator2}    IN ZIP    ${dictionary1}    ${dictionary2}    ${dictionary3}
+        Log To Console    ${option_iterator1} and ${option_iterator2} and ${option_iterator3}
+        Log To Console    由于没有设置接收value值的值，只会接收key值
+        Log To Console    如果后续循环中，多个字典中没有该次循环的值，循环将会终止
+    END

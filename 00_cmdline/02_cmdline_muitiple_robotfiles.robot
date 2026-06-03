@@ -43,3 +43,10 @@ rebot --name example output.xml
 
 # 5、参数文件语法
 robot --argumentfile /路径/参数文件.txt 测试套件.robot
+
+# 6、正则表达式匹配
+NUMA node\\(s\\):+\\s*4    意味：匹配到的文本: NUMA node(s):        8
+\\s匹配空值、\\(匹配括号。。。
+
+NUMA node\\d+ CPU\\(s\\):\\s+(\\d+-\\d+,\\d+-\\d+)    意味：NUMA node0 CPU(s):   0-15,32-47
+\\d匹配任意整数

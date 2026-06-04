@@ -50,3 +50,12 @@ NUMA node\\(s\\):+\\s*4    意味：匹配到的文本: NUMA node(s):        8
 
 NUMA node\\d+ CPU\\(s\\):\\s+(\\d+-\\d+,\\d+-\\d+)    意味：NUMA node0 CPU(s):   0-15,32-47
 \\d匹配任意整数
+
+# 7、正则表达式捕获，通过re.search()
+re.search(r'Microcode Patch Level: (\\S+)', """${res}""")[1].strip()
+re.search() 返回匹配对象
+[0]：整个匹配的字符串
+[1]：第一个捕获组的内容（即 (\S+) 匹配的部分）
+例如：
+匹配到："Microcode Patch Level: 0x1234"
+捕获组："0x1234"

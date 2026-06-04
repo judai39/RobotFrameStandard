@@ -17,4 +17,9 @@ Case01
     ${recieve_instance_name}    Set Variable    ${User.name}
     Log To Console    ${recieve_instance_name}
 
+Case02--evaluate语句快速导入对应python模块
+    ${cpuinfo}    Set Variable    Microcode Patch Level: 0x1234
+    # 在Evaluate语句后第二个参数为临时导入该语句的库（本例中为re）
+    ${Microcode_version}    Evaluate    re.search(r'microcode\\S*: (\\S+)',${cpuinfo})[1].strip()    re
+
 # φ(*￣0￣)：调用外部类中的实例化对象，类名和文件名要不一样，这和调用python类作为关键字的规则不一致，有什么办法可以统一呢？

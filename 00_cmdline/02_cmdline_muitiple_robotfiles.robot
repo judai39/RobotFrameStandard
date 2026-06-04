@@ -59,3 +59,6 @@ re.search() 返回匹配对象
 例如：
 匹配到："Microcode Patch Level: 0x1234"
 捕获组："0x1234"
+
+re.search('Address:(.*)',$NewFile,re.S)[0]
+re.search()的第三个参数re.S，意为匹配时包含换行符等特殊符号

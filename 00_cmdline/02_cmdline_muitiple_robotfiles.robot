@@ -62,3 +62,17 @@ re.search() 返回匹配对象
 
 re.search('Address:(.*)',$NewFile,re.S)[0]
 re.search()的第三个参数re.S，意为匹配时包含换行符等特殊符号
+例如：
+text = """
+Customer Information:
+Name: John Doe
+Address: 123 Main St
+Apt 4B
+New York, NY 10001
+Phone: 555-1234
+"""
+# 有 re.S → 匹配整个地址块
+# "Address: 123 Main St\nApt 4B\nNew York, NY 10001"
+
+# 无 re.S → 只匹配第一行
+# "Address: 123 Main St"

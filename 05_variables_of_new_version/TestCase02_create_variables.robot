@@ -81,6 +81,8 @@ CASE04
     ${dict}=    Create Dictionary    first_key=unknown
     ${dict.first_key}=    Set Variable    John
     ${dict.last_key}=    Set Variable    Mike
+    # 还可以创建空字典
+    ${disk_list}    Create List
 CASE05
     # 多变量赋值
     ${a}    ${b}    ${c}    Get THREE

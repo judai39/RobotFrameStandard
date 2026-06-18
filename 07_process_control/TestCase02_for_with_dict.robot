@@ -32,8 +32,8 @@ Keyword01
 
 同时遍历多个字典（使用多个值接收）--FOR IN ZIP
     VAR    &{dictionary1}    option1=value1    option2=value2
-    VAR    &{dictionary1}    option1=value1
-    VAR    &{dictionary1}    option1=value1    option2=value2
+    VAR    &{dictionary2}    option1=value1
+    VAR    &{dictionary3}    option1=value1    option2=value2
     FOR    ${option_iterator1}    ${option_iterator3}    ${option_iterator2}    IN ZIP    ${dictionary1}    ${dictionary2}    ${dictionary3}
         Log To Console    ${option_iterator1} and ${option_iterator2} and ${option_iterator3}
         Log To Console    由于没有设置接收value值的值，只会接收key值

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.4.2 (Python 3.12.0 on win32)" generated="2026-06-29T10:35:33.617688" rpa="false" schemaversion="5">
+<suite id="s1" name="Test" source="c:\Users\dkf11651\Desktop\RobotFrameStandard\test.robot">
+<test id="s1-t1" name="CASE01" line="6">
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${options}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-06-29T10:35:33.654589" elapsed="0.000997"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<msg time="2026-06-29T10:35:33.655586" level="FAIL">Dictionary '${options}' has no key '0'.</msg>
+<arg>${options}[0]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="FAIL" start="2026-06-29T10:35:33.655586" elapsed="0.014960">Dictionary '${options}' has no key '0'.</status>
+</kw>
+<status status="FAIL" start="2026-06-29T10:35:33.653592" elapsed="0.016954">Dictionary '${options}' has no key '0'.</status>
+</test>
+<status status="FAIL" start="2026-06-29T10:35:33.623669" elapsed="0.047874"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="1" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Test" id="s1" pass="0" fail="1" skip="0">Test</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

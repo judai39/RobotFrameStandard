@@ -14,5 +14,4 @@ CASE01
     Log To Console    USER模块中的LIST__、DICT__前缀不会被识别:${ANIMALS}、${FINISH}
     ${instance}    Set Variable    ${User.name}
     Log To Console    ${instance}
-    ${variables_dict}    Set Variable    ${User.variables}
     Log To Console    也可以在类属性、实例属性中创建变量供RF调用${user.age}、${user._not_variable}、${user.age}

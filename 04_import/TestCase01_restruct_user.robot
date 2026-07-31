@@ -7,3 +7,4 @@ Variables    ../.library/restruct_user.py
 Case01
     ${keyword_return}    ReturnRestructUser
     Log To Console    ${keyword_return.name}
+    # Log To Console    $keyword_return.name    #不能作为实例对象传入。。。

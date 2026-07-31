@@ -13,7 +13,7 @@ Case01
     # ${recieve_library_name}    Get User Name    #library/User.py中的实例化对象需要注释掉
 
     # Variable资源中，声明一个实例化对象以供调用，调用实例化对象可以直接使用${变量名.成员名}
-    ${recieve_library_name}    Evaluate    $User.name
+    ${recieve_library_name}    Evaluate    ${User.name}
     ${recieve_instance_name}    Set Variable    ${User.name}
     Log To Console    ${recieve_instance_name}
 

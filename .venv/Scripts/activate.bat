@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=C:\Users\dkf11651\Desktop\RobotFrameStandard\.venv
+set VIRTUAL_ENV=E:\Project\RobotFrameworkStandard\.venv
 
 if not defined PROMPT set PROMPT=$P$G
 

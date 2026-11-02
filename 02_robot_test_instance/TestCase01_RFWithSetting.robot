@@ -38,8 +38,12 @@ Using variables
 Normal TestCase
     # 可以通过这种方法拿返回值，模板创建是拿不到的
     ${sum}    sum_keywords    arg1=5    arg2=5
+    # 这时候有人要问了，拿不到返回值为什么还要用呢？
+    # 模板创建是为了用一堆数据批量测试模板方法的--数据驱动
+    # 用以下两个举例
 
 使用sum_keywords关键字模板创建
+    # 我希望测试seum_keywords方法的正确性，传入不同的参数，看看返回值是否正确(优势在于，不管有多少数据，只需要在模板中写一行就可以了)
     [Template]    sum_keywords
     arg1=5    arg2=5
 

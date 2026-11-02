@@ -1,0 +1,2769 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<keywordspec name="AppiumLibrary" type="LIBRARY" format="HTML" scope="GLOBAL" generated="2026-11-02T03:21:58+00:00" specversion="6" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\__init__.py" lineno="10">
+<version>3.2.1</version>
+<doc>&lt;p&gt;AppiumLibrary is a Mobile App testing library for Robot Framework.&lt;/p&gt;
+&lt;h2 id="Locating or specifying elements"&gt;Locating or specifying elements&lt;/h2&gt;
+&lt;p&gt;All keywords in AppiumLibrary that need to find an element on the page take an argument, either a &lt;code&gt;locator&lt;/code&gt; or a &lt;code&gt;webelement&lt;/code&gt;. &lt;code&gt;locator&lt;/code&gt; is a string that describes how to locate an element using a syntax specifying different location strategies. &lt;code&gt;webelement&lt;/code&gt; is a variable that holds a WebElement instance, which is a representation of the element.&lt;/p&gt;
+&lt;h3 id="Using locators"&gt;Using locators&lt;/h3&gt;
+&lt;p&gt;By default, when a locator is provided, it is matched against the key attributes of the particular element type. For iOS and Android, key attribute is &lt;code&gt;id&lt;/code&gt; for all elements and locating elements is easy using just the &lt;code&gt;id&lt;/code&gt;. For example:&lt;/p&gt;
+&lt;pre&gt;
+Click Element    id=my_element
+&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;id&lt;/code&gt; and &lt;code&gt;xpath&lt;/code&gt; are not required to be specified, however &lt;code&gt;xpath&lt;/code&gt; should start with &lt;code&gt;//&lt;/code&gt; else just use &lt;code&gt;xpath&lt;/code&gt; locator as explained below.&lt;/p&gt;
+&lt;p&gt;For example:&lt;/p&gt;
+&lt;pre&gt;
+Click Element    my_element
+Wait Until Page Contains Element    //*[@type="android.widget.EditText"]
+&lt;/pre&gt;
+&lt;p&gt;Appium additionally supports some of the &lt;a href="https://w3c.github.io/webdriver/webdriver-spec.html"&gt;Mobile JSON Wire Protocol&lt;/a&gt; locator strategies. It is also possible to specify the approach AppiumLibrary should take to find an element by specifying a lookup strategy with a locator prefix. Supported strategies are:&lt;/p&gt;
+&lt;table border="1"&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Strategy&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;&lt;b&gt;Example&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;&lt;b&gt;Description&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;&lt;b&gt;Note&lt;/b&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;identifier&lt;/td&gt;
+&lt;td&gt;Click Element &lt;span class="name"&gt;|&lt;/span&gt; identifier=my_element&lt;/td&gt;
+&lt;td&gt;Matches by @id attribute&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;id&lt;/td&gt;
+&lt;td&gt;Click Element &lt;span class="name"&gt;|&lt;/span&gt; id=my_element&lt;/td&gt;
+&lt;td&gt;Matches by @resource-id attribute&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;accessibility_id&lt;/td&gt;
+&lt;td&gt;Click Element &lt;span class="name"&gt;|&lt;/span&gt; accessibility_id=button3&lt;/td&gt;
+&lt;td&gt;Accessibility options utilize.&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;xpath&lt;/td&gt;
+&lt;td&gt;Click Element &lt;span class="name"&gt;|&lt;/span&gt; xpath=//UIATableView/UIATableCell/UIAButton&lt;/td&gt;
+&lt;td&gt;Matches with arbitrary XPath&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;class&lt;/td&gt;
+&lt;td&gt;Click Element &lt;span class="name"&gt;|&lt;/span&gt; class=UIAPickerWheel&lt;/td&gt;
+&lt;td&gt;Matches by class&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;android&lt;/td&gt;
+&lt;td&gt;Click Element &lt;span class="name"&gt;|&lt;/span&gt; android=UiSelector().description('Apps')&lt;/td&gt;
+&lt;td&gt;Matches by Android UI Automator&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ios&lt;/td&gt;
+&lt;td&gt;Click Element &lt;span class="name"&gt;|&lt;/span&gt; ios=.buttons().withName('Apps')&lt;/td&gt;
+&lt;td&gt;Matches by iOS UI Automation&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;predicate&lt;/td&gt;
+&lt;td&gt;Click Element &lt;span class="name"&gt;|&lt;/span&gt; predicate=name=="login"&lt;/td&gt;
+&lt;td&gt;Matches by iOS Predicate&lt;/td&gt;
+&lt;td&gt;Check PR: #196&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;chain&lt;/td&gt;
+&lt;td&gt;Click Element &lt;span class="name"&gt;|&lt;/span&gt; chain=XCUIElementTypeWindow[1]/*&lt;/td&gt;
+&lt;td&gt;Matches by iOS Class Chain&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;css&lt;/td&gt;
+&lt;td&gt;Click Element &lt;span class="name"&gt;|&lt;/span&gt; css=.green_button&lt;/td&gt;
+&lt;td&gt;Matches by css in webview&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;name&lt;/td&gt;
+&lt;td&gt;Click Element &lt;span class="name"&gt;|&lt;/span&gt; name=my_element&lt;/td&gt;
+&lt;td&gt;Matches by @name attribute&lt;/td&gt;
+&lt;td&gt;&lt;b&gt;Only valid&lt;/b&gt; for Selendroid&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;h3 id="Using webelements"&gt;Using webelements&lt;/h3&gt;
+&lt;p&gt;Starting with version 1.4 of the AppiumLibrary, one can pass an argument that contains a WebElement instead of a string locator. To get a WebElement, use the new &lt;a href="#Get%20Webelements" class="name"&gt;Get WebElements&lt;/a&gt; or &lt;a href="#Get%20Webelement" class="name"&gt;Get WebElement&lt;/a&gt; keyword.&lt;/p&gt;
+&lt;p&gt;For example:&lt;/p&gt;
+&lt;pre&gt;
+@{elements}    Get Webelements    class=UIAButton
+Click Element    @{elements}[2]
+&lt;/pre&gt;</doc>
+<tags>
+</tags>
+<inits>
+<init name="__init__" lineno="82">
+<arguments repr="timeout=5, run_on_failure=Capture Page Screenshot, sleep_between_wait_loop=0.2">
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="timeout=5">
+<name>timeout</name>
+<default>5</default>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="run_on_failure=Capture Page Screenshot">
+<name>run_on_failure</name>
+<default>Capture Page Screenshot</default>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="sleep_between_wait_loop=0.2">
+<name>sleep_between_wait_loop</name>
+<default>0.2</default>
+</arg>
+</arguments>
+<doc>&lt;p&gt;AppiumLibrary can be imported with optional arguments.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;timeout&lt;/code&gt; is the default timeout used to wait for all waiting actions. It can be later set with &lt;a href="#Set%20Appium%20Timeout" class="name"&gt;Set Appium Timeout&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;run_on_failure&lt;/code&gt; specifies the name of a keyword (from any available libraries) to execute when a AppiumLibrary keyword fails.&lt;/p&gt;
+&lt;p&gt;By default &lt;a href="#Capture%20Page%20Screenshot" class="name"&gt;Capture Page Screenshot&lt;/a&gt; will be used to take a screenshot of the current page. Using the value &lt;span class="name"&gt;No Operation&lt;/span&gt; will disable this feature altogether. See &lt;a href="#Register%20Keyword%20To%20Run%20On%20Failure" class="name"&gt;Register Keyword To Run On Failure&lt;/a&gt; keyword for more information about this functionality.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;sleep_between_wait_loop&lt;/code&gt; is the default sleep used to wait between loop in all wait until keywords&lt;/p&gt;
+&lt;p&gt;Examples:&lt;/p&gt;
+&lt;table border="1"&gt;
+&lt;tr&gt;
+&lt;td&gt;Library&lt;/td&gt;
+&lt;td&gt;AppiumLibrary&lt;/td&gt;
+&lt;td&gt;10&lt;/td&gt;
+&lt;td&gt;# Sets default timeout to 10 seconds&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Library&lt;/td&gt;
+&lt;td&gt;AppiumLibrary&lt;/td&gt;
+&lt;td&gt;timeout=10&lt;/td&gt;
+&lt;td&gt;run_on_failure=No Operation&lt;/td&gt;
+&lt;td&gt;# Sets default timeout to 10 seconds and does nothing on failure&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Library&lt;/td&gt;
+&lt;td&gt;AppiumLibrary&lt;/td&gt;
+&lt;td&gt;timeout=10&lt;/td&gt;
+&lt;td&gt;sleep_between_wait_loop=0.3&lt;/td&gt;
+&lt;td&gt;# Sets default timeout to 10 seconds and sleep 300 ms between wait loop&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;</doc>
+<shortdoc>AppiumLibrary can be imported with optional arguments.</shortdoc>
+</init>
+</inits>
+<keywords>
+<kw name="Activate Application" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_applicationmanagement.py" lineno="257">
+<arguments repr="app_id">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="app_id">
+<name>app_id</name>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Activates the application if it is not running or is running in the background.&lt;/p&gt;
+&lt;p&gt;Args:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;app_id&lt;/code&gt;: bundleId for iOS, package name for Android.&lt;/li&gt;
+&lt;/ul&gt;</doc>
+<shortdoc>Activates the application if it is not running or is running in the background.</shortdoc>
+</kw>
+<kw name="Background Application" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_applicationmanagement.py" lineno="250">
+<arguments repr="seconds=5">
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="seconds=5">
+<name>seconds</name>
+<default>5</default>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Puts the application in the background on the device for a certain amount of &lt;code&gt;seconds&lt;/code&gt;.&lt;/p&gt;</doc>
+<shortdoc>Puts the application in the background on the device for a certain amount of ``seconds``.</shortdoc>
+</kw>
+<kw name="Capture Page Screenshot" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_screenshot.py" lineno="11">
+<arguments repr="filename=None">
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="filename=None">
+<name>filename</name>
+<default>None</default>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Takes a screenshot of the current page and embeds it into the log.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;filename&lt;/code&gt; argument specifies the name of the file to write the screenshot into. If no &lt;code&gt;filename&lt;/code&gt; is given, the screenshot will be embedded as a Base64 image to the log.html. In this case no file is created in the filesystem.&lt;/p&gt;</doc>
+<shortdoc>Takes a screenshot of the current page and embeds it into the log.</shortdoc>
+</kw>
+<kw name="Clear Text" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_element.py" lineno="32">
+<arguments repr="locator">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="locator">
+<name>locator</name>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Clears the text field identified by &lt;code&gt;locator&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;See &lt;a href="#Introduction" class="name"&gt;introduction&lt;/a&gt; for details about locating elements.&lt;/p&gt;</doc>
+<shortdoc>Clears the text field identified by ``locator``.</shortdoc>
+</kw>
+<kw name="Click Alert Button" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_touch.py" lineno="252">
+<arguments repr="button_name">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="button_name">
+<name>button_name</name>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Clicks on the alert button identified by &lt;code&gt;button_name&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;iOS only.&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;Args:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;button_name&lt;/code&gt;: the text on the iOS alert button&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;table border="1"&gt;
+&lt;tr&gt;
+&lt;td&gt;Click Alert Button&lt;/td&gt;
+&lt;td&gt;Allow&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;</doc>
+<shortdoc>Clicks on the alert button identified by ``button_name``.</shortdoc>
+</kw>
+<kw name="Click Element" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_element.py" lineno="40">
+<arguments repr="locator">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="locator">
+<name>locator</name>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Clicks the element identified by &lt;code&gt;locator&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Key attributes for arbitrary elements are &lt;span class="name"&gt;index&lt;/span&gt; and &lt;span class="name"&gt;name&lt;/span&gt;. See &lt;a href="#Introduction" class="name"&gt;introduction&lt;/a&gt; for details about locating elements.&lt;/p&gt;</doc>
+<shortdoc>Clicks the element identified by ``locator``.</shortdoc>
+</kw>
+<kw name="Click Text" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_element.py" lineno="49">
+<arguments repr="text, exact_match=False">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="text">
+<name>text</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="exact_match=False">
+<name>exact_match</name>
+<default>False</default>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Clicks the text identified by &lt;code&gt;text&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;By default, it attempts to click the first occurrence that contains the given &lt;code&gt;text&lt;/code&gt;. If you want to click the exact matching text, set &lt;code&gt;exact_match&lt;/code&gt; to &lt;span class="name"&gt;True&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;If there are multiple instances of &lt;code&gt;text&lt;/code&gt; and you do not want the first one, then use &lt;span class="name"&gt;locator&lt;/span&gt; with &lt;a href="#Get%20Webelements" class="name"&gt;Get Web Elements&lt;/a&gt; instead.&lt;/p&gt;</doc>
+<shortdoc>Clicks the text identified by ``text``.</shortdoc>
+</kw>
+<kw name="Close All Applications" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_applicationmanagement.py" lineno="30">
+<arguments repr="">
+</arguments>
+<doc>&lt;p&gt;Closes all open applications.&lt;/p&gt;
+&lt;p&gt;This keyword is meant to be used in test or suite teardown to make sure all the applications are closed before the test execution finishes.&lt;/p&gt;
+&lt;p&gt;After this keyword, the application indices returned by &lt;a href="#Open%20Application" class="name"&gt;Open Application&lt;/a&gt; are reset and start from &lt;span class="name"&gt;1&lt;/span&gt;.&lt;/p&gt;</doc>
+<shortdoc>Closes all open applications.</shortdoc>
+</kw>
+<kw name="Close Application" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_applicationmanagement.py" lineno="25">
+<arguments repr="">
+</arguments>
+<doc>&lt;p&gt;Closes the current application and the webdriver session.&lt;/p&gt;</doc>
+<shortdoc>Closes the current application and the webdriver session.</shortdoc>
+</kw>
+<kw name="Delete File" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_android_utils.py" lineno="106">
+<arguments repr="path, timeout=5000, include_stderr=True">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="path">
+<name>path</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="timeout=5000">
+<name>timeout</name>
+<default>5000</default>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="include_stderr=True">
+<name>include_stderr</name>
+<default>True</default>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Deletes the file specified as &lt;code&gt;path&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;Android only.&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;Args:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;path&lt;/code&gt;: the path on the device&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;timeout&lt;/code&gt;: delete command timeout&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;includeStderr&lt;/code&gt;: whether exception will be thrown if the command's return code is not zero&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;table border="1"&gt;
+&lt;tr&gt;
+&lt;td&gt;Delete File&lt;/td&gt;
+&lt;td&gt;/sdcard/downloads/file.extension&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;</doc>
+<shortdoc>Deletes the file specified as ``path``.</shortdoc>
+</kw>
+<kw name="Drag And Drop" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_touch.py" lineno="266">
+<arguments repr="locator: str, target: str">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="locator: str">
+<name>locator</name>
+<type name="str" typedoc="string"/>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="target: str">
+<name>target</name>
+<type name="str" typedoc="string"/>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Drags the element identified by the &lt;code&gt;locator&lt;/code&gt; into the &lt;code&gt;target&lt;/code&gt; element.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;locator&lt;/code&gt; argument is the locator of the dragged element and the &lt;code&gt;target&lt;/code&gt; is the locator of the target. See the &lt;span class="name"&gt;Locating elements&lt;/span&gt; section for details about the locator syntax.&lt;/p&gt;
+&lt;p&gt;Args:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;locator&lt;/code&gt;: the element to drag&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;target&lt;/code&gt;: the element to drag to&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;table border="1"&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href="#Drag%20And%20Drop" class="name"&gt;Drag And Drop&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;id=div#element&lt;/td&gt;
+&lt;td&gt;id=div.target&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;</doc>
+<shortdoc>Drags the element identified by the ``locator`` into the ``target`` element.</shortdoc>
+</kw>
+<kw name="Element Attribute Should Match" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_element.py" lineno="217">
+<arguments repr="locator, attr_name, match_pattern, regexp=False">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="locator">
+<name>locator</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="attr_name">
+<name>attr_name</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="match_pattern">
+<name>match_pattern</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="regexp=False">
+<name>regexp</name>
+<default>False</default>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Verifies that an attribute of an element matches the expected criteria.&lt;/p&gt;
+&lt;p&gt;The element is identified by &lt;code&gt;locator&lt;/code&gt;. See &lt;a href="#Introduction" class="name"&gt;introduction&lt;/a&gt; for details about locating elements. If more than one element matches, the first element is selected.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;attr_name&lt;/code&gt; is the name of the attribute within the selected element.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;match_pattern&lt;/code&gt; is used for the matching, if the match_pattern is&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;boolean or 'True'/'true'/'False'/'false' String then a boolean match is applied&lt;/li&gt;
+&lt;li&gt;any other string is cause a string match&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The &lt;i&gt;regexp&lt;/i&gt; defines whether the string match is done using regular expressions (i.e. BuiltIn Library's &lt;a href="http://robotframework.org/robotframework/latest/libraries/BuiltIn.html#Should%20Match%20Regexp"&gt;Should Match Regexp&lt;/a&gt; or string pattern match (i.e. BuiltIn Library's &lt;a href="http://robotframework.org/robotframework/latest/libraries/BuiltIn.html#Should%20Match"&gt;Should Match&lt;/a&gt;)&lt;/p&gt;
+&lt;p&gt;Examples:&lt;/p&gt;
+&lt;table border="1"&gt;
+&lt;tr&gt;
+&lt;td&gt;Element Attribute Should Match&lt;/td&gt;
+&lt;td&gt;xpath = //*[contains(@text,'foo')]&lt;/td&gt;
+&lt;td&gt;text&lt;/td&gt;
+&lt;td&gt;*foobar&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Element Attribute Should Match&lt;/td&gt;
+&lt;td&gt;xpath = //*[contains(@text,'foo')]&lt;/td&gt;
+&lt;td&gt;text&lt;/td&gt;
+&lt;td&gt;f.*ar&lt;/td&gt;
+&lt;td&gt;regexp = True&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Element Attribute Should Match&lt;/td&gt;
+&lt;td&gt;xpath = //*[contains(@text,'foo')]&lt;/td&gt;
+&lt;td&gt;enabled&lt;/td&gt;
+&lt;td&gt;True&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;pre&gt;
+1. is a string pattern match i.e. the 'text' attribute should end with the string 'foobar'
+2. is a regular expression match i.e. the regexp 'f.*ar' should be within the 'text' attribute
+3. is a boolead match i.e. the 'enabled' attribute should be True
+&lt;/pre&gt;
+&lt;p&gt;&lt;i&gt;&lt;b&gt;NOTE: &lt;/b&gt;&lt;/i&gt; On Android the supported attribute names can be found in the uiautomator2 driver readme: [&lt;a href="https://github.com/appium/appium-uiautomator2-driver?tab=readme-ov-file#element-attributes"&gt;https://github.com/appium/appium-uiautomator2-driver?tab=readme-ov-file#element-attributes&lt;/a&gt;]&lt;/p&gt;
+&lt;p&gt;&lt;i&gt;&lt;b&gt;NOTE: &lt;/b&gt;&lt;/i&gt; Some attributes can be evaluated in two different ways e.g. these evaluate the same thing:&lt;/p&gt;
+&lt;table border="1"&gt;
+&lt;tr&gt;
+&lt;td&gt;Element Attribute Should Match&lt;/td&gt;
+&lt;td&gt;xpath = //*[contains(@text,'example text')]&lt;/td&gt;
+&lt;td&gt;name&lt;/td&gt;
+&lt;td&gt;txt_field_name&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Element Name Should Be&lt;/td&gt;
+&lt;td&gt;xpath = //*[contains(@text,'example text')]&lt;/td&gt;
+&lt;td&gt;txt_field_name&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;</doc>
+<shortdoc>Verifies that an attribute of an element matches the expected criteria.</shortdoc>
+</kw>
+<kw name="Element Should Be Disabled" deprecated="true" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_element.py" lineno="170">
+<arguments repr="locator, loglevel=INFO">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="locator">
+<name>locator</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="loglevel=INFO">
+<name>loglevel</name>
+<default>INFO</default>
+</arg>
+</arguments>
+<doc>&lt;p&gt;&lt;b&gt;DEPRECATED!!&lt;/b&gt; Use &lt;a href="#Expect%20Element" class="name"&gt;Expect Element&lt;/a&gt; instead&lt;/p&gt;
+&lt;p&gt;Verifies that element identified by &lt;code&gt;locator&lt;/code&gt; is disabled.&lt;/p&gt;
+&lt;p&gt;Args:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;locator&lt;/code&gt;: locator of the element that should be disabled&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;loglevel&lt;/code&gt;: if this keyword fails, it automatically logs the page source using the the given loglevel. Set this argument to &lt;a href="#type-None" class="name"&gt;NONE&lt;/a&gt; to disable logging.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Key attributes for arbitrary elements are &lt;span class="name"&gt;id&lt;/span&gt; and &lt;span class="name"&gt;name&lt;/span&gt;. See &lt;a href="#Introduction" class="name"&gt;introduction&lt;/a&gt; for details about locating elements.&lt;/p&gt;</doc>
+<shortdoc>*DEPRECATED!!* Use `Expect Element` instead</shortdoc>
+</kw>
+<kw name="Element Should Be Enabled" deprecated="true" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_element.py" lineno="188">
+<arguments repr="locator, loglevel=INFO">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="locator">
+<name>locator</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="loglevel=INFO">
+<name>loglevel</name>
+<default>INFO</default>
+</arg>
+</arguments>
+<doc>&lt;p&gt;&lt;b&gt;DEPRECATED!!&lt;/b&gt; Use &lt;a href="#Expect%20Element" class="name"&gt;Expect Element&lt;/a&gt; instead Verifies that the element identified by &lt;code&gt;locator&lt;/code&gt; is enabled.&lt;/p&gt;
+&lt;p&gt;Args:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;locator&lt;/code&gt;: locator of the element that should be enabled&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;loglevel&lt;/code&gt;: if this keyword fails, it automatically logs the page source using the the given loglevel. Set this argument to &lt;a href="#type-None" class="name"&gt;NONE&lt;/a&gt; to disable logging.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Key attributes for arbitrary elements are &lt;span class="name"&gt;id&lt;/span&gt; and &lt;span class="name"&gt;name&lt;/span&gt;. See &lt;a href="#Introduction" class="name"&gt;introduction&lt;/a&gt; for details about locating elements.&lt;/p&gt;</doc>
+<shortdoc>*DEPRECATED!!* Use `Expect Element` instead Verifies that the element identified by ``locator`` is enabled.</shortdoc>
+</kw>
+<kw name="Element Should Be Visible" deprecated="true" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_element.py" lineno="205">
+<arguments repr="locator, loglevel=INFO">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="locator">
+<name>locator</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="loglevel=INFO">
+<name>loglevel</name>
+<default>INFO</default>
+</arg>
+</arguments>
+<doc>&lt;p&gt;&lt;b&gt;DEPRECATED!!&lt;/b&gt; Use &lt;a href="#Expect%20Element" class="name"&gt;Expect Element&lt;/a&gt; instead Verifies that the element identified by &lt;code&gt;locator&lt;/code&gt; is visible.&lt;/p&gt;
+&lt;p&gt;Key attributes for arbitrary elements are &lt;span class="name"&gt;id&lt;/span&gt; and &lt;span class="name"&gt;name&lt;/span&gt;. See &lt;a href="#Introduction" class="name"&gt;introduction&lt;/a&gt; for details about locating elements.&lt;/p&gt;</doc>
+<shortdoc>*DEPRECATED!!* Use `Expect Element` instead Verifies that the element identified by ``locator`` is visible.</shortdoc>
+</kw>
+<kw name="Element Should Contain Text" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_element.py" lineno="294">
+<arguments repr="locator, expected, message=">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="locator">
+<name>locator</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="expected">
+<name>expected</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="message=">
+<name>message</name>
+<default/>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Verifies the element identified by &lt;code&gt;locator&lt;/code&gt; contains the text &lt;code&gt;expected&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;If you wish to assert an exact (not a substring) match on the text of the element, use &lt;a href="#Element%20Text%20Should%20Be" class="name"&gt;Element Text Should Be&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Key attributes for arbitrary elements are &lt;code&gt;id&lt;/code&gt; and &lt;code&gt;xpath&lt;/code&gt;. &lt;code&gt;message&lt;/code&gt; can be used to override the default error message.&lt;/p&gt;</doc>
+<shortdoc>Verifies the element identified by ``locator`` contains the text ``expected``.</shortdoc>
+</kw>
+<kw name="Element Should Not Contain Text" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_element.py" lineno="311">
+<arguments repr="locator, expected, message=">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="locator">
+<name>locator</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="expected">
+<name>expected</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="message=">
+<name>message</name>
+<default/>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Verifies element identified by &lt;code&gt;locator&lt;/code&gt; does not contain the text &lt;code&gt;expected&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;message&lt;/code&gt; can be used to override the default error message. See &lt;a href="#Element%20Should%20Contain%20Text" class="name"&gt;Element Should Contain Text&lt;/a&gt; for more details.&lt;/p&gt;</doc>
+<shortdoc>Verifies element identified by ``locator`` does not contain the text ``expected``.</shortdoc>
+</kw>
+<kw name="Element Text Should Be" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_element.py" lineno="326">
+<arguments repr="locator, expected, message=">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="locator">
+<name>locator</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="expected">
+<name>expected</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="message=">
+<name>message</name>
+<default/>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Verifies that the element identified by &lt;code&gt;locator&lt;/code&gt; contains the exact text &lt;code&gt;expected&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;In contrast to &lt;a href="#Element%20Should%20Contain%20Text" class="name"&gt;Element Should Contain Text&lt;/a&gt;, this keyword does not try a substring match but an exact match on the element identified by &lt;code&gt;locator&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;message&lt;/code&gt; can be used to override the default error message.&lt;/p&gt;</doc>
+<shortdoc>Verifies that the element identified by ``locator`` contains the exact text ``expected``.</shortdoc>
+</kw>
+<kw name="Execute Adb Shell" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_applicationmanagement.py" lineno="199">
+<arguments repr="command, *args">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="command">
+<name>command</name>
+</arg>
+<arg kind="VAR_POSITIONAL" required="false" repr="*args">
+<name>args</name>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Executes ADB shell commands.&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;Android only.&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;Args:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;command&lt;/code&gt;: the adb shell command&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;args&lt;/code&gt;: arguments to send to the command&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Returns the exit code of the ADB shell.&lt;/p&gt;
+&lt;p&gt;Requires the server flag --relaxed-security to be set on Appium server.&lt;/p&gt;</doc>
+<shortdoc>Executes ADB shell commands.</shortdoc>
+</kw>
+<kw name="Execute Adb Shell Timeout" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_applicationmanagement.py" lineno="218">
+<arguments repr="command, timeout, *args">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="command">
+<name>command</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="timeout">
+<name>timeout</name>
+</arg>
+<arg kind="VAR_POSITIONAL" required="false" repr="*args">
+<name>args</name>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Executes ADB shell commands with a timeout.&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;Android only.&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;Args:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;command&lt;/code&gt;: the adb shell command&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;timeout&lt;/code&gt;: timeout to be applied to the command&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;args&lt;/code&gt;: arguments to send to the command&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Returns the exit code of the ADB shell.&lt;/p&gt;
+&lt;p&gt;Requires the server flag --relaxed-security to be set on Appium server.&lt;/p&gt;</doc>
+<shortdoc>Executes ADB shell commands with a timeout.</shortdoc>
+</kw>
+<kw name="Execute Async Script" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_applicationmanagement.py" lineno="180">
+<arguments repr="script, **kwargs">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="script">
+<name>script</name>
+</arg>
+<arg kind="VAR_NAMED" required="false" repr="**kwargs">
+<name>kwargs</name>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Injects a snippet of Async-JavaScript into the page for execution in the context of the currently selected frame (Web context only).&lt;/p&gt;
+&lt;p&gt;The executed script is assumed to be asynchronous and must signal that is done by invoking the provided callback, which is always provided as the final argument to the function.&lt;/p&gt;
+&lt;p&gt;The value to this callback will be returned to the client.&lt;/p&gt;
+&lt;p&gt;Check &lt;a href="#Execute%20Script" class="name"&gt;Execute Script&lt;/a&gt; for example kwargs usage.&lt;/p&gt;</doc>
+<shortdoc>Injects a snippet of Async-JavaScript into the page for execution in the context of the currently selected frame (Web context only).</shortdoc>
+</kw>
+<kw name="Execute Script" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_applicationmanagement.py" lineno="164">
+<arguments repr="script, **kwargs">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="script">
+<name>script</name>
+</arg>
+<arg kind="VAR_NAMED" required="false" repr="**kwargs">
+<name>kwargs</name>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Executes a variety of native, mobile commands that aren't associated with a specific endpoint. Check out the appium drivers for more details: &lt;a href="https://appium.io/docs/en/2.19/ecosystem/drivers/"&gt;https://appium.io/docs/en/2.19/ecosystem/drivers/&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;table border="1"&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;amp;{scrollGesture}&lt;/td&gt;
+&lt;td&gt;create dictionary&lt;/td&gt;
+&lt;td&gt;left=${50}&lt;/td&gt;
+&lt;td&gt;top=${150}&lt;/td&gt;
+&lt;td&gt;width=${50}&lt;/td&gt;
+&lt;td&gt;height=${200}&lt;/td&gt;
+&lt;td&gt;direction=down&lt;/td&gt;
+&lt;td&gt;percent=${100}&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Sleep&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Execute Script&lt;/td&gt;
+&lt;td&gt;mobile: scrollGesture&lt;/td&gt;
+&lt;td&gt;&amp;amp;{scrollGesture}&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;</doc>
+<shortdoc>Executes a variety of native, mobile commands that aren't associated with a specific endpoint. Check out the appium drivers for more details: https://appium.io/docs/en/2.19/ecosystem/drivers/.</shortdoc>
+</kw>
+<kw name="Expect Element" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_element.py" lineno="532">
+<arguments repr="locator: str, state: Literal['visible', 'not visible', 'enabled', 'disabled'], timeout=0:00:05, retry_interval=0:00:01, message: str | None = None, loglevel: str | None = INFO">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="locator: str">
+<name>locator</name>
+<type name="str" typedoc="string"/>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="state: Literal['visible', 'not visible', 'enabled', 'disabled']">
+<name>state</name>
+<type name="Literal" typedoc="Literal">
+<type name="'visible'"/>
+<type name="'not visible'"/>
+<type name="'enabled'"/>
+<type name="'disabled'"/>
+</type>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="timeout=0:00:05">
+<name>timeout</name>
+<default>0:00:05</default>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="retry_interval=0:00:01">
+<name>retry_interval</name>
+<default>0:00:01</default>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="message: str | None = None">
+<name>message</name>
+<type name="Union" union="true">
+<type name="str" typedoc="string"/>
+<type name="None" typedoc="None"/>
+</type>
+<default>None</default>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="loglevel: str | None = INFO">
+<name>loglevel</name>
+<type name="Union" union="true">
+<type name="str" typedoc="string"/>
+<type name="None" typedoc="None"/>
+</type>
+<default>INFO</default>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Verifies that the element with the given &lt;code&gt;locator&lt;/code&gt; has the desired &lt;code&gt;state&lt;/code&gt; (visible, not visible, enabled, disabled.)&lt;/p&gt;
+&lt;p&gt;Args:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;locator&lt;/code&gt;: the locator of the element to be checked.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;state&lt;/code&gt;: the expected state of the element.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;timeout&lt;/code&gt;: the maximum time to wait for the element to meet the condition. The default timeout is 5 seconds.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;retry_interval&lt;/code&gt;: the interval at which the check is repeated before the timeout is reached. The default retry interval is 1 second.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;message&lt;/code&gt;: a custom error message to display if the check fails. By setting this argument, the default error message gets overwritten.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;loglevel&lt;/code&gt;: if this keyword fails, it automatically logs the page source using the the given loglevel. Set this argument to &lt;a href="#type-None" class="name"&gt;NONE&lt;/a&gt; to disable logging.&lt;/li&gt;
+&lt;/ul&gt;</doc>
+<shortdoc>Verifies that the element with the given ``locator`` has the desired ``state`` (visible, not visible, enabled, disabled.)</shortdoc>
+</kw>
+<kw name="Expect Text" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_element.py" lineno="575">
+<arguments repr="text: str, state: Literal['visible', 'not visible', 'enabled', 'disabled'], exact_match=False, timeout=0:00:05, retry_interval=0:00:01, message: str | None = None, loglevel: str | None = INFO">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="text: str">
+<name>text</name>
+<type name="str" typedoc="string"/>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="state: Literal['visible', 'not visible', 'enabled', 'disabled']">
+<name>state</name>
+<type name="Literal" typedoc="Literal">
+<type name="'visible'"/>
+<type name="'not visible'"/>
+<type name="'enabled'"/>
+<type name="'disabled'"/>
+</type>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="exact_match=False">
+<name>exact_match</name>
+<default>False</default>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="timeout=0:00:05">
+<name>timeout</name>
+<default>0:00:05</default>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="retry_interval=0:00:01">
+<name>retry_interval</name>
+<default>0:00:01</default>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="message: str | None = None">
+<name>message</name>
+<type name="Union" union="true">
+<type name="str" typedoc="string"/>
+<type name="None" typedoc="None"/>
+</type>
+<default>None</default>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="loglevel: str | None = INFO">
+<name>loglevel</name>
+<type name="Union" union="true">
+<type name="str" typedoc="string"/>
+<type name="None" typedoc="None"/>
+</type>
+<default>INFO</default>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Verifies that the &lt;code&gt;text&lt;/code&gt; has the desired &lt;code&gt;state&lt;/code&gt; (visible, not visible).&lt;/p&gt;
+&lt;p&gt;Args:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;text&lt;/code&gt;: the text to be checked.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;state&lt;/code&gt;: the expected state of the text.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;timeout&lt;/code&gt;: the maximum time to wait for the text to meet the condition. The default timeout is 5 seconds.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;retry_interval&lt;/code&gt;: the interval at which the check is repeated before the timeout is reached. The default retry interval is 1 second.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;message&lt;/code&gt;: a custom error message to display if the check fails. By setting this argument, the default error message gets overwritten.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;loglevel&lt;/code&gt;: if this keyword fails, it automatically logs the page source using the the given loglevel. Set this argument to &lt;a href="#type-None" class="name"&gt;NONE&lt;/a&gt; to disable logging.&lt;/li&gt;
+&lt;/ul&gt;</doc>
+<shortdoc>Verifies that the ``text`` has the desired ``state`` (visible, not visible).</shortdoc>
+</kw>
+<kw name="Flick" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_touch.py" lineno="285">
+<arguments repr="start_x: int, start_y: int, end_x: int, end_y: int">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="start_x: int">
+<name>start_x</name>
+<type name="int" typedoc="integer"/>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="start_y: int">
+<name>start_y</name>
+<type name="int" typedoc="integer"/>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="end_x: int">
+<name>end_x</name>
+<type name="int" typedoc="integer"/>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="end_y: int">
+<name>end_y</name>
+<type name="int" typedoc="integer"/>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Flicks from one point to another point.&lt;/p&gt;
+&lt;p&gt;Args:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;start_x&lt;/code&gt;: x-coordinate at which to start&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;start_y&lt;/code&gt;: y-coordinate at which to start&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;end_x&lt;/code&gt;: x-coordinate at which to stop&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;end_y&lt;/code&gt;: y-coordinate at which to stop&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;table border="1"&gt;
+&lt;tr&gt;
+&lt;td&gt;Flick&lt;/td&gt;
+&lt;td&gt;100&lt;/td&gt;
+&lt;td&gt;100&lt;/td&gt;
+&lt;td&gt;100&lt;/td&gt;
+&lt;td&gt;400&lt;/td&gt;
+&lt;td&gt;# Flicks the screen up.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;</doc>
+<shortdoc>Flicks from one point to another point.</shortdoc>
+</kw>
+<kw name="Get Activity" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_android_utils.py" lineno="127">
+<arguments repr="">
+</arguments>
+<doc>&lt;p&gt;Retrieves the current activity on the device.&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;Android only.&lt;/b&gt;&lt;/p&gt;</doc>
+<shortdoc>Retrieves the current activity on the device.</shortdoc>
+</kw>
+<kw name="Get Appium SessionId" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_applicationmanagement.py" lineno="138">
+<arguments repr="">
+</arguments>
+<doc>&lt;p&gt;Returns the current session ID as a reference.&lt;/p&gt;</doc>
+<shortdoc>Returns the current session ID as a reference.</shortdoc>
+</kw>
+<kw name="Get Appium Timeout" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_applicationmanagement.py" lineno="112">
+<arguments repr="">
+</arguments>
+<doc>&lt;p&gt;Returns the timeout in seconds used by various keywords.&lt;/p&gt;
+&lt;p&gt;See &lt;a href="#Set%20Appium%20Timeout" class="name"&gt;Set Appium Timeout&lt;/a&gt; for an explanation.&lt;/p&gt;</doc>
+<shortdoc>Returns the timeout in seconds used by various keywords.</shortdoc>
+</kw>
+<kw name="Get Capability" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_applicationmanagement.py" lineno="393">
+<arguments repr="capability_name">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="capability_name">
+<name>capability_name</name>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Returns the desired capability value by &lt;code&gt;capability_name&lt;/code&gt;.&lt;/p&gt;</doc>
+<shortdoc>Returns the desired capability value by ``capability_name``.</shortdoc>
+</kw>
+<kw name="Get Contexts" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_applicationmanagement.py" lineno="328">
+<arguments repr="">
+</arguments>
+<doc>&lt;p&gt;Returns the available contexts.&lt;/p&gt;</doc>
+<shortdoc>Returns the available contexts.</shortdoc>
+</kw>
+<kw name="Get Current Context" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_applicationmanagement.py" lineno="324">
+<arguments repr="">
+</arguments>
+<doc>&lt;p&gt;Returns the current context.&lt;/p&gt;</doc>
+<shortdoc>Returns the current context.</shortdoc>
+</kw>
+<kw name="Get Device Location" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_applicationmanagement.py" lineno="434">
+<arguments repr="">
+</arguments>
+<doc>&lt;p&gt;Gets the device's current GPS location with human-readable address information.&lt;/p&gt;
+&lt;p&gt;Retrieves GPS coordinates from the connected device and performs reverse geocoding to convert coordinates into readable address components (country, state, city).&lt;/p&gt;
+&lt;p&gt;Returns: dict: Location data with the following structure:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;country&lt;/code&gt; (str): Country name or empty string if unavailable&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;state&lt;/code&gt; (str): State/region name or empty string if unavailable&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;city&lt;/code&gt; (str): City/town/village name or empty string if unavailable&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;latitude&lt;/code&gt; (float): GPS latitude coordinate&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;longitude&lt;/code&gt; (float): GPS longitude coordinate&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Examples:&lt;/p&gt;
+&lt;table border="1"&gt;
+&lt;tr&gt;
+&lt;td&gt;${location}=&lt;/td&gt;
+&lt;td&gt;Get Device Location&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Log&lt;/td&gt;
+&lt;td&gt;Current location: ${location['city']}, ${location['country']}&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Should Not Be Empty&lt;/td&gt;
+&lt;td&gt;${location['latitude']}&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Should Be True&lt;/td&gt;
+&lt;td&gt;${location['longitude']} != 0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;p&gt;Prerequisites:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Device location services must be enabled&lt;/li&gt;
+&lt;li&gt;App must have location permissions granted&lt;/li&gt;
+&lt;li&gt;Internet connection required for address lookup&lt;/li&gt;
+&lt;li&gt;Uses OpenStreetMap's Nominatim geocoding service&lt;/li&gt;
+&lt;/ul&gt;</doc>
+<shortdoc>Gets the device's current GPS location with human-readable address information.</shortdoc>
+</kw>
+<kw name="Get Device Time" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_applicationmanagement.py" lineno="416">
+<arguments repr="format: str | None = None">
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="format: str | None = None">
+<name>format</name>
+<type name="Union" union="true">
+<type name="str" typedoc="string"/>
+<type name="None" typedoc="None"/>
+</type>
+<default>None</default>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Returns the date and time from the device.&lt;/p&gt;
+&lt;p&gt;Args:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;format&lt;/code&gt;: the set of format specifiers. Read &lt;a href="https://momentjs.com/docs/"&gt;https://momentjs.com/docs/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;to get the full list of supported datetime format specifiers. If unset, default return format is &lt;span class="name"&gt;YYYY-MM-DDTHH:mm:ssZ&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;Examples: ${device_time}    | Get Device Time | DD MM YYYY hh:mm:ss | ${device_time}    | Get Device Time | |&lt;/p&gt;
+&lt;p&gt;Return: str: The date and time&lt;/p&gt;</doc>
+<shortdoc>Returns the date and time from the device.</shortdoc>
+</kw>
+<kw name="Get Element Attribute" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_element.py" lineno="407">
+<arguments repr="locator, attribute">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="locator">
+<name>locator</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="attribute">
+<name>attribute</name>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Returns the element attribute using the given &lt;code&gt;attribute&lt;/code&gt;, e.g. name, value, etc.&lt;/p&gt;
+&lt;p&gt;Examples:&lt;/p&gt;
+&lt;table border="1"&gt;
+&lt;tr&gt;
+&lt;td&gt;Get Element Attribute&lt;/td&gt;
+&lt;td&gt;locator&lt;/td&gt;
+&lt;td&gt;name&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Get Element Attribute&lt;/td&gt;
+&lt;td&gt;locator&lt;/td&gt;
+&lt;td&gt;value&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;</doc>
+<shortdoc>Returns the element attribute using the given ``attribute``, e.g. name, value, etc.</shortdoc>
+</kw>
+<kw name="Get Element Location" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_element.py" lineno="428">
+<arguments repr="locator">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="locator">
+<name>locator</name>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Returns the location of the element with the &lt;code&gt;locator&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Key attributes for arbitrary elements are &lt;span class="name"&gt;id&lt;/span&gt; and &lt;span class="name"&gt;name&lt;/span&gt;. See &lt;a href="#Introduction" class="name"&gt;introduction&lt;/a&gt; for details about locating elements.&lt;/p&gt;</doc>
+<shortdoc>Returns the location of the element with the ``locator``.</shortdoc>
+</kw>
+<kw name="Get Element Rect" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_element.py" lineno="450">
+<arguments repr="locator">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="locator">
+<name>locator</name>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Returns the dimensions and coordinates of the element with the &lt;code&gt;locator&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Key attributes for arbitrary elements are &lt;span class="name"&gt;id&lt;/span&gt; and &lt;span class="name"&gt;name&lt;/span&gt;. See &lt;a href="#Introduction" class="name"&gt;introduction&lt;/a&gt; for details about locating elements.&lt;/p&gt;</doc>
+<shortdoc>Returns the dimensions and coordinates of the element with the ``locator``.</shortdoc>
+</kw>
+<kw name="Get Element Size" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_element.py" lineno="439">
+<arguments repr="locator">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="locator">
+<name>locator</name>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Returns the size of the element with the &lt;code&gt;locator&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Key attributes for arbitrary elements are &lt;span class="name"&gt;id&lt;/span&gt; and &lt;span class="name"&gt;name&lt;/span&gt;. See &lt;a href="#Introduction" class="name"&gt;introduction&lt;/a&gt; for details about locating elements.&lt;/p&gt;</doc>
+<shortdoc>Returns the size of the element with the ``locator``.</shortdoc>
+</kw>
+<kw name="Get Matching Xpath Count" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_element.py" lineno="477">
+<arguments repr="xpath">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="xpath">
+<name>xpath</name>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Returns the number of elements matching the &lt;code&gt;xpath&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;One should not use the &lt;span class="name"&gt;xpath=&lt;/span&gt; prefix for 'xpath'. XPath is assumed.&lt;/p&gt;
+&lt;table border="1"&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Correct:&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;${count}&lt;/td&gt;
+&lt;td&gt;Get Matching Xpath Count&lt;/td&gt;
+&lt;td&gt;//android.view.View[@text='Test']&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Incorrect:&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;${count}&lt;/td&gt;
+&lt;td&gt;Get Matching Xpath Count&lt;/td&gt;
+&lt;td&gt;xpath=//android.view.View[@text='Test']&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;p&gt;If you wish to assert the number of matching elements, use &lt;a href="#Xpath%20Should%20Match%20X%20Times" class="name"&gt;Xpath Should Match X Times&lt;/a&gt;.&lt;/p&gt;</doc>
+<shortdoc>Returns the number of elements matching the ``xpath``</shortdoc>
+</kw>
+<kw name="Get Network Connection Status" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_android_utils.py" lineno="18">
+<arguments repr="">
+</arguments>
+<doc>&lt;p&gt;Returns an integer bitmask specifying the network connection type.&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;Android only.&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;See &lt;a href="#Set%20Network%20Connection%20Status" class="name"&gt;set network connection status&lt;/a&gt; for more details.&lt;/p&gt;</doc>
+<shortdoc>Returns an integer bitmask specifying the network connection type.</shortdoc>
+</kw>
+<kw name="Get Sleep Between Wait Loop" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_waiting.py" lineno="129">
+<arguments repr="">
+</arguments>
+<doc>&lt;p&gt;Returns the sleep interval in seconds between the wait loops used by the &lt;span class="name"&gt;Wait Until ...&lt;/span&gt; keywords.&lt;/p&gt;</doc>
+<shortdoc>Returns the sleep interval in seconds between the wait loops used by the `Wait Until ...` keywords.</shortdoc>
+</kw>
+<kw name="Get Source" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_applicationmanagement.py" lineno="143">
+<arguments repr="">
+</arguments>
+<doc>&lt;p&gt;Returns the entire source of the current page.&lt;/p&gt;</doc>
+<shortdoc>Returns the entire source of the current page.</shortdoc>
+</kw>
+<kw name="Get Text" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_element.py" lineno="461">
+<arguments repr="locator, first_only: bool = True">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="locator">
+<name>locator</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="first_only: bool = True">
+<name>first_only</name>
+<type name="bool" typedoc="boolean"/>
+<default>True</default>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Returns the text of the element with the &lt;code&gt;locator&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Args:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;locator&lt;/code&gt;: locator of the element. For hybrid and mobile browser use &lt;span class="name"&gt;xpath&lt;/span&gt; locator, as others might cause problems.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;first_only&lt;/code&gt;: allows to get the text from the 1st match (default) or a list containing all matches.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Examples:&lt;/p&gt;
+&lt;table border="1"&gt;
+&lt;tr&gt;
+&lt;td&gt;${text}&lt;/td&gt;
+&lt;td&gt;Get Text&lt;/td&gt;
+&lt;td&gt;//*[contains(@text,'foo')]&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;@{text}&lt;/td&gt;
+&lt;td&gt;Get Text&lt;/td&gt;
+&lt;td&gt;//*[contains(@text,'foo')]&lt;/td&gt;
+&lt;td&gt;${False}&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;</doc>
+<shortdoc>Returns the text of the element with the ``locator``.</shortdoc>
+</kw>
+<kw name="Get Webelement" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_element.py" lineno="345">
+<arguments repr="locator">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="locator">
+<name>locator</name>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Returns the first &lt;a href="http://selenium-python.readthedocs.io/api.html#module-selenium.webdriver.remote.webelement"&gt;WebElement&lt;/a&gt; object matching &lt;code&gt;locator&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;table border="1"&gt;
+&lt;tr&gt;
+&lt;td&gt;${element}&lt;/td&gt;
+&lt;td&gt;Get Webelement&lt;/td&gt;
+&lt;td&gt;id=my_element&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Click Element&lt;/td&gt;
+&lt;td&gt;${element}&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;</doc>
+<shortdoc>Returns the first [http://selenium-python.readthedocs.io/api.html#module-selenium.webdriver.remote.webelement|WebElement] object matching ``locator``.</shortdoc>
+</kw>
+<kw name="Get Webelement In Webelement" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_element.py" lineno="377">
+<arguments repr="element, locator">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="element">
+<name>element</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="locator">
+<name>locator</name>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Returns a single &lt;a href="http://selenium-python.readthedocs.io/api.html#module-selenium.webdriver.remote.webelement"&gt;WebElement&lt;/a&gt; object matching &lt;code&gt;locator&lt;/code&gt; that is a child of the argument &lt;code&gt;element&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;This is useful when your HTML doesn't properly have id or name elements on all elements. This way the user can find an element with a tag and then search that element's children.&lt;/p&gt;</doc>
+<shortdoc>Returns a single [http://selenium-python.readthedocs.io/api.html#module-selenium.webdriver.remote.webelement|WebElement] object matching ``locator`` that is a child of the argument ``element``.</shortdoc>
+</kw>
+<kw name="Get Webelements" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_element.py" lineno="397">
+<arguments repr="locator">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="locator">
+<name>locator</name>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Returns a list of &lt;a href="http://selenium-python.readthedocs.io/api.html#module-selenium.webdriver.remote.webelement"&gt;WebElement&lt;/a&gt; objects matching &lt;code&gt;locator&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;table border="1"&gt;
+&lt;tr&gt;
+&lt;td&gt;@{elements}&lt;/td&gt;
+&lt;td&gt;Get Webelements&lt;/td&gt;
+&lt;td&gt;id=my_element&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Click Element&lt;/td&gt;
+&lt;td&gt;@{elements}[2]&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;</doc>
+<shortdoc>Returns a list of [http://selenium-python.readthedocs.io/api.html#module-selenium.webdriver.remote.webelement|WebElement] objects matching ``locator``.</shortdoc>
+</kw>
+<kw name="Get Window Height" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_applicationmanagement.py" lineno="333">
+<arguments repr="">
+</arguments>
+<doc>&lt;p&gt;Returns the current device window height.&lt;/p&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;table border="1"&gt;
+&lt;tr&gt;
+&lt;td&gt;${width}&lt;/td&gt;
+&lt;td&gt;Get Window Width&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;${height}&lt;/td&gt;
+&lt;td&gt;Get Window Height&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Click A Point&lt;/td&gt;
+&lt;td&gt;${width}&lt;/td&gt;
+&lt;td&gt;${height}&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;</doc>
+<shortdoc>Returns the current device window height.</shortdoc>
+</kw>
+<kw name="Get Window Title" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_applicationmanagement.py" lineno="403">
+<arguments repr="">
+</arguments>
+<doc>&lt;p&gt;Returns the current Webview window title.&lt;/p&gt;</doc>
+<shortdoc>Returns the current Webview window title.</shortdoc>
+</kw>
+<kw name="Get Window Url" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_applicationmanagement.py" lineno="407">
+<arguments repr="">
+</arguments>
+<doc>&lt;p&gt;Returns the current Webview window URL.&lt;/p&gt;</doc>
+<shortdoc>Returns the current Webview window URL.</shortdoc>
+</kw>
+<kw name="Get Window Width" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_applicationmanagement.py" lineno="344">
+<arguments repr="">
+</arguments>
+<doc>&lt;p&gt;Returns the current device window width.&lt;/p&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;table border="1"&gt;
+&lt;tr&gt;
+&lt;td&gt;${width}&lt;/td&gt;
+&lt;td&gt;Get Window Width&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;${height}&lt;/td&gt;
+&lt;td&gt;Get Window Height&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Click A Point&lt;/td&gt;
+&lt;td&gt;${width}&lt;/td&gt;
+&lt;td&gt;${height}&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;</doc>
+<shortdoc>Returns the current device window width.</shortdoc>
+</kw>
+<kw name="Get Windows" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_applicationmanagement.py" lineno="411">
+<arguments repr="">
+</arguments>
+<doc>&lt;p&gt;Returns the available Webview windows.&lt;/p&gt;</doc>
+<shortdoc>Returns the available Webview windows.</shortdoc>
+</kw>
+<kw name="Go Back" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_applicationmanagement.py" lineno="239">
+<arguments repr="">
+</arguments>
+<doc>&lt;p&gt;Goes one step backward in the browser history.&lt;/p&gt;</doc>
+<shortdoc>Goes one step backward in the browser history.</shortdoc>
+</kw>
+<kw name="Go To Url" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_applicationmanagement.py" lineno="383">
+<arguments repr="url">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="url">
+<name>url</name>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Opens the &lt;code&gt;url&lt;/code&gt; in the default web browser.&lt;/p&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;table border="1"&gt;
+&lt;tr&gt;
+&lt;td&gt;Open Application&lt;/td&gt;
+&lt;td&gt;&lt;a href="http://localhost:4755/wd/hub"&gt;http://localhost:4755/wd/hub&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;platformName=iOS&lt;/td&gt;
+&lt;td&gt;platformVersion=7.0&lt;/td&gt;
+&lt;td&gt;deviceName='iPhone Simulator'&lt;/td&gt;
+&lt;td&gt;browserName=Safari&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Go To URL&lt;/td&gt;
+&lt;td&gt;&lt;a href="http://m.webapp.com"&gt;http://m.webapp.com&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;</doc>
+<shortdoc>Opens the ``url`` in the default web browser.</shortdoc>
+</kw>
+<kw name="Hide Keyboard" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_element.py" lineno="101">
+<arguments repr="key_name=None">
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="key_name=None">
+<name>key_name</name>
+<default>None</default>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Hides the software keyboard on the device if it is currently visible.&lt;/p&gt;
+&lt;p&gt;Args:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;key_name&lt;/code&gt; (iOS only): the name of the key to press to dismiss the keyboard.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;On Android, this argument is ignored.&lt;/p&gt;
+&lt;p&gt;Examples:&lt;/p&gt;
+&lt;table border="1"&gt;
+&lt;tr&gt;
+&lt;td&gt;Hide Keyboard&lt;/td&gt;
+&lt;td&gt;Return&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Hide Keyboard&lt;/td&gt;
+&lt;td&gt;Done&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;</doc>
+<shortdoc>Hides the software keyboard on the device if it is currently visible.</shortdoc>
+</kw>
+<kw name="Input Password" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_element.py" lineno="79">
+<arguments repr="locator, text">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="locator">
+<name>locator</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="text">
+<name>text</name>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Types the given password into the text field identified by &lt;code&gt;locator&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;The difference between this keyword and &lt;a href="#Input%20Text" class="name"&gt;Input Text&lt;/a&gt; is that this keyword does not log the given password.&lt;/p&gt;
+&lt;p&gt;See &lt;a href="#Introduction" class="name"&gt;introduction&lt;/a&gt; for details about locating elements.&lt;/p&gt;</doc>
+<shortdoc>Types the given password into the text field identified by ``locator``.</shortdoc>
+</kw>
+<kw name="Input Text" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_element.py" lineno="71">
+<arguments repr="locator, text">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="locator">
+<name>locator</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="text">
+<name>text</name>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Types the given &lt;code&gt;text&lt;/code&gt; into the text field identified by &lt;code&gt;locator&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;See &lt;a href="#Introduction" class="name"&gt;introduction&lt;/a&gt; for details about locating elements.&lt;/p&gt;</doc>
+<shortdoc>Types the given ``text`` into the text field identified by ``locator``.</shortdoc>
+</kw>
+<kw name="Input Text Into Current Element" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_element.py" lineno="61">
+<arguments repr="text">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="text">
+<name>text</name>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Types the given &lt;code&gt;text&lt;/code&gt; into the currently selected text field.&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;Android only.&lt;/b&gt;&lt;/p&gt;</doc>
+<shortdoc>Types the given ``text`` into the currently selected text field.</shortdoc>
+</kw>
+<kw name="Input Value" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_element.py" lineno="90">
+<arguments repr="locator, text">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="locator">
+<name>locator</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="text">
+<name>text</name>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Sets the given value into the text field identified by &lt;code&gt;locator&lt;/code&gt;. Input Value makes use of set_value.&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;iOS only.&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;See &lt;a href="#Introduction" class="name"&gt;introduction&lt;/a&gt; for details about locating elements.&lt;/p&gt;</doc>
+<shortdoc>Sets the given value into the text field identified by ``locator``. Input Value makes use of set_value.</shortdoc>
+</kw>
+<kw name="Install App" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_android_utils.py" lineno="149">
+<arguments repr="app_path, app_package">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="app_path">
+<name>app_path</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="app_package">
+<name>app_package</name>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Installs the app via appium.&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;Android only.&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;Args:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;app_path&lt;/code&gt;: path to app&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;app_package&lt;/code&gt;: package of install app to verify&lt;/li&gt;
+&lt;/ul&gt;</doc>
+<shortdoc>Installs the app via appium.</shortdoc>
+</kw>
+<kw name="Is Keyboard Shown" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_element.py" lineno="115">
+<arguments repr="">
+</arguments>
+<doc>&lt;p&gt;Returns true or false if the device keyboard is displayed.&lt;/p&gt;</doc>
+<shortdoc>Returns true or false if the device keyboard is displayed.</shortdoc>
+</kw>
+<kw name="Landscape" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_applicationmanagement.py" lineno="318">
+<arguments repr="">
+</arguments>
+<doc>&lt;p&gt;Sets the device orientation to LANDSCAPE.&lt;/p&gt;</doc>
+<shortdoc>Sets the device orientation to LANDSCAPE.</shortdoc>
+</kw>
+<kw name="Lock" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_applicationmanagement.py" lineno="243">
+<arguments repr="seconds=5">
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="seconds=5">
+<name>seconds</name>
+<default>5</default>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Locks the device for a certain period of time.&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;iOS only.&lt;/b&gt;&lt;/p&gt;</doc>
+<shortdoc>Locks the device for a certain period of time.</shortdoc>
+</kw>
+<kw name="Log Source" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_applicationmanagement.py" lineno="147">
+<arguments repr="loglevel=INFO">
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="loglevel=INFO">
+<name>loglevel</name>
+<default>INFO</default>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Logs and returns the entire html source of the current page or frame.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;loglevel&lt;/code&gt; argument defines the used log level. Valid log levels are &lt;span class="name"&gt;WARN&lt;/span&gt;, &lt;span class="name"&gt;INFO&lt;/span&gt; (default), &lt;span class="name"&gt;DEBUG&lt;/span&gt;, &lt;span class="name"&gt;TRACE&lt;/span&gt; and &lt;a href="#type-None" class="name"&gt;NONE&lt;/a&gt; (no logging).&lt;/p&gt;</doc>
+<shortdoc>Logs and returns the entire html source of the current page or frame.</shortdoc>
+</kw>
+<kw name="Long Press Keycode" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_keyevent.py" lineno="36">
+<arguments repr="keycode, metastate=None">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="keycode">
+<name>keycode</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="metastate=None">
+<name>metastate</name>
+<default>None</default>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Sends a long press of &lt;code&gt;keycode&lt;/code&gt; to the device.&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;Android only.&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;See &lt;a href="#Press%20Keycode" class="name"&gt;Press Keycode&lt;/a&gt; for more details.&lt;/p&gt;</doc>
+<shortdoc>Sends a long press of ``keycode`` to the device.</shortdoc>
+</kw>
+<kw name="Open Application" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_applicationmanagement.py" lineno="44">
+<arguments repr="remote_url, alias=None, **kwargs">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="remote_url">
+<name>remote_url</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="alias=None">
+<name>alias</name>
+<default>None</default>
+</arg>
+<arg kind="VAR_NAMED" required="false" repr="**kwargs">
+<name>kwargs</name>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Opens a new application to the given Appium server. Capabilities of appium server, Android and iOS, Please check &lt;a href="https://appium.io/docs/en/2.19/guides/caps/"&gt;https://appium.io/docs/en/2.19/guides/caps/&lt;/a&gt;&lt;/p&gt;
+&lt;table border="1"&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Option&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;&lt;b&gt;Man.&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;&lt;b&gt;Description&lt;/b&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;remote_url&lt;/td&gt;
+&lt;td&gt;Yes&lt;/td&gt;
+&lt;td&gt;Appium server url&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;alias&lt;/td&gt;
+&lt;td&gt;No&lt;/td&gt;
+&lt;td&gt;alias&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;p&gt;Appium options can also be set using a dictionary (see example below with appium:options=&amp;amp;{APPIUM_OPTIONS}):&lt;/p&gt;
+&lt;table border="1"&gt;
+&lt;tr&gt;
+&lt;td&gt;VAR    &amp;amp;{APPIUM_OPTIONS}&lt;/td&gt;
+&lt;td&gt;deviceName=iPhone 15 Pro&lt;/td&gt;
+&lt;td&gt;platformVersion=17.0&lt;/td&gt;
+&lt;td&gt;app=your.app&lt;/td&gt;
+&lt;td&gt;automationName=XCUITest&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;p&gt;Examples:&lt;/p&gt;
+&lt;table border="1"&gt;
+&lt;tr&gt;
+&lt;td&gt;Open Application&lt;/td&gt;
+&lt;td&gt;&lt;a href="http://localhost:4723"&gt;http://localhost:4723&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;alias=Myapp1&lt;/td&gt;
+&lt;td&gt;platformName=iOS&lt;/td&gt;
+&lt;td&gt;platformVersion=18.5&lt;/td&gt;
+&lt;td&gt;deviceName=iPhone 16&lt;/td&gt;
+&lt;td&gt;app=your.app&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Open Application&lt;/td&gt;
+&lt;td&gt;&lt;a href="http://localhost:4723"&gt;http://localhost:4723&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;alias=Myapp1&lt;/td&gt;
+&lt;td&gt;platformName=iOS&lt;/td&gt;
+&lt;td&gt;platformVersion=18.5&lt;/td&gt;
+&lt;td&gt;deviceName=iPhone 16&lt;/td&gt;
+&lt;td&gt;app=your.app&lt;/td&gt;
+&lt;td&gt;ignore_certificates=False&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Open Application&lt;/td&gt;
+&lt;td&gt;&lt;a href="http://localhost:4723"&gt;http://localhost:4723&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;platformName=Android&lt;/td&gt;
+&lt;td&gt;platformVersion=4.2.2&lt;/td&gt;
+&lt;td&gt;deviceName=192.168.56.101:5555&lt;/td&gt;
+&lt;td&gt;app=${CURDIR}/demoapp/OrangeDemoApp.apk&lt;/td&gt;
+&lt;td&gt;appPackage=com.netease.qa.orangedemo&lt;/td&gt;
+&lt;td&gt;appActivity=MainActivity&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Open Application&lt;/td&gt;
+&lt;td&gt;&lt;a href="http://localhost:4723"&gt;http://localhost:4723&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;platformName=iOS&lt;/td&gt;
+&lt;td&gt;appium:options=&amp;amp;{APPIUM_OPTIONS}&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;i&gt;&lt;b&gt;NOTE:&lt;/b&gt;&lt;/i&gt; &lt;a href="#Open%20Application" class="name"&gt;Open Application&lt;/a&gt; now uses the ClientConfig for configuration. If you encounter any issues or warnings when using this keyword, please refer to &lt;a href="https://github.com/SeleniumHQ/selenium/blob/trunk/py/selenium/webdriver/remote/client_config.py"&gt;https://github.com/SeleniumHQ/selenium/blob/trunk/py/selenium/webdriver/remote/client_config.py&lt;/a&gt;&lt;/p&gt;</doc>
+<shortdoc>Opens a new application to the given Appium server. Capabilities of appium server, Android and iOS, Please check https://appium.io/docs/en/2.19/guides/caps/ | *Option*            | *Man.* | *Description*     | | remote_url          | Yes    | Appium server url | | alias               | No     | alias             |</shortdoc>
+</kw>
+<kw name="Open Notifications" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_android_utils.py" lineno="10">
+<arguments repr="">
+</arguments>
+<doc>&lt;p&gt;Opens and expands an Android device's notification drawer.&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;Android only.&lt;/b&gt;&lt;/p&gt;</doc>
+<shortdoc>Opens and expands an Android device's notification drawer.</shortdoc>
+</kw>
+<kw name="Page Should Contain Element" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_element.py" lineno="145">
+<arguments repr="locator, loglevel=INFO">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="locator">
+<name>locator</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="loglevel=INFO">
+<name>loglevel</name>
+<default>INFO</default>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Verifies that the current page contains the element with the &lt;code&gt;locator&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Args:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;locator&lt;/code&gt;: locator of the element that the page should contain&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;loglevel&lt;/code&gt;: if this keyword fails, it automatically logs the page source using the the given loglevel. Set this argument to &lt;a href="#type-None" class="name"&gt;NONE&lt;/a&gt; to disable logging.&lt;/li&gt;
+&lt;/ul&gt;</doc>
+<shortdoc>Verifies that the current page contains the element with the ``locator``.</shortdoc>
+</kw>
+<kw name="Page Should Contain Text" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_element.py" lineno="120">
+<arguments repr="text, loglevel=INFO">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="text">
+<name>text</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="loglevel=INFO">
+<name>loglevel</name>
+<default>INFO</default>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Verifies that the current page contains &lt;code&gt;text&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Args:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;text&lt;/code&gt;: the text that the page should contain&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;loglevel&lt;/code&gt;: if this keyword fails, it automatically logs the page source using the the given loglevel. Set this argument to &lt;a href="#type-None" class="name"&gt;NONE&lt;/a&gt; to disable logging.&lt;/li&gt;
+&lt;/ul&gt;</doc>
+<shortdoc>Verifies that the current page contains ``text``.</shortdoc>
+</kw>
+<kw name="Page Should Not Contain Element" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_element.py" lineno="158">
+<arguments repr="locator, loglevel=INFO">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="locator">
+<name>locator</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="loglevel=INFO">
+<name>loglevel</name>
+<default>INFO</default>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Verifies that the current page does not contain the element with the &lt;code&gt;locator&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Args:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;locator&lt;/code&gt;: locator of the element that the page should not contain&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;loglevel&lt;/code&gt;: if this keyword fails, it automatically logs the page source using the the given loglevel. Set this argument to &lt;a href="#type-None" class="name"&gt;NONE&lt;/a&gt; to disable logging.&lt;/li&gt;
+&lt;/ul&gt;</doc>
+<shortdoc>Verifies that the current page does not contain the element with the ``locator``.</shortdoc>
+</kw>
+<kw name="Page Should Not Contain Text" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_element.py" lineno="133">
+<arguments repr="text, loglevel=INFO">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="text">
+<name>text</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="loglevel=INFO">
+<name>loglevel</name>
+<default>INFO</default>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Verifies that the current page does not contain &lt;code&gt;text&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Args:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;text&lt;/code&gt;: the text that the page should not contain&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;loglevel&lt;/code&gt;: if this keyword fails, it automatically logs the page source using the the given loglevel. Set this argument to &lt;a href="#type-None" class="name"&gt;NONE&lt;/a&gt; to disable logging.&lt;/li&gt;
+&lt;/ul&gt;</doc>
+<shortdoc>Verifies that the current page does not contain ``text``.</shortdoc>
+</kw>
+<kw name="Portrait" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_applicationmanagement.py" lineno="312">
+<arguments repr="">
+</arguments>
+<doc>&lt;p&gt;Sets the device orientation to PORTRAIT.&lt;/p&gt;</doc>
+<shortdoc>Sets the device orientation to PORTRAIT.</shortdoc>
+</kw>
+<kw name="Press Keycode" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_keyevent.py" lineno="9">
+<arguments repr="keycode, metastate=None">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="keycode">
+<name>keycode</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="metastate=None">
+<name>metastate</name>
+<default>None</default>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Sends a press of &lt;code&gt;keycode&lt;/code&gt; to the device.&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;Android only.&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;Possible keycodes &amp;amp; meta states can be found in &lt;a href="http://developer.android.com/reference/android/view/KeyEvent.html"&gt;http://developer.android.com/reference/android/view/KeyEvent.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Meta state describe the pressed state of key modifiers such as Shift, Ctrl &amp;amp; Alt keys. The Meta State is an integer in which each bit set to 1 represents a pressed meta key.&lt;/p&gt;
+&lt;p&gt;For example&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;META_SHIFT_ON = 1&lt;/li&gt;
+&lt;li&gt;META_ALT_ON = 2&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;
+metastate=1 --&amp;gt; Shift is pressed
+metastate=2 --&amp;gt; Alt is pressed
+metastate=3 --&amp;gt; Shift+Alt is pressed
+&lt;/pre&gt;
+&lt;p&gt;Args:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;keycode&lt;/code&gt;: the keycode to be sent to the device&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;metastate&lt;/code&gt;: status of the meta keys&lt;/li&gt;
+&lt;/ul&gt;</doc>
+<shortdoc>Sends a press of ``keycode`` to the device.</shortdoc>
+</kw>
+<kw name="Pull File" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_android_utils.py" lineno="51">
+<arguments repr="path, decode=False">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="path">
+<name>path</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="decode=False">
+<name>decode</name>
+<default>False</default>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Retrieves the file at &lt;code&gt;path&lt;/code&gt; and returns its content.&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;Android only.&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;Args:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;path&lt;/code&gt;: the path to the file on the device&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;decode&lt;/code&gt;: should be set to True/False to decode the data (base64) before returning it (default=False)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;table border="1"&gt;
+&lt;tr&gt;
+&lt;td&gt;${file_content}&lt;/td&gt;
+&lt;td&gt;Pull File&lt;/td&gt;
+&lt;td&gt;/sdcard/downloads/file.extension&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;</doc>
+<shortdoc>Retrieves the file at ``path`` and returns its content.</shortdoc>
+</kw>
+<kw name="Pull Folder" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_android_utils.py" lineno="69">
+<arguments repr="path, decode=False">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="path">
+<name>path</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="decode=False">
+<name>decode</name>
+<default>False</default>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Retrieves a folder at &lt;code&gt;path&lt;/code&gt; and returns its zipped content.&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;Android only.&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;Args:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;path&lt;/code&gt;: the path to the folder on the device&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;decode&lt;/code&gt;: True/False decode the data (base64) before returning it (default=False)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;table border="1"&gt;
+&lt;tr&gt;
+&lt;td&gt;${folder_content}&lt;/td&gt;
+&lt;td&gt;Pull Folder&lt;/td&gt;
+&lt;td&gt;/sdcard/downloads/files&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;</doc>
+<shortdoc>Retrieves a folder at ``path`` and returns its zipped content.</shortdoc>
+</kw>
+<kw name="Push File" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_android_utils.py" lineno="87">
+<arguments repr="path, data, encode=False">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="path">
+<name>path</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="data">
+<name>data</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="encode=False">
+<name>encode</name>
+<default>False</default>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Puts the data in the file specified as &lt;code&gt;path&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;Android only.&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;Args:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;path&lt;/code&gt;: the path on the device&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;data&lt;/code&gt;: data to be written to the file&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;encode&lt;/code&gt;: should be set to True/False to encode the data as base64 before writing it to the file (default=False)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;table border="1"&gt;
+&lt;tr&gt;
+&lt;td&gt;Push File&lt;/td&gt;
+&lt;td&gt;/sdcard/downloads/file.extension&lt;/td&gt;
+&lt;td&gt;${data}&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;</doc>
+<shortdoc>Puts the data in the file specified as ``path``.</shortdoc>
+</kw>
+<kw name="Register Keyword To Run On Failure" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_runonfailure.py" lineno="17">
+<arguments repr="keyword">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="keyword">
+<name>keyword</name>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Sets the keyword to be executed when an AppiumLibrary keyword fails.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;keyword&lt;/code&gt; is the name of a keyword (from any available libraries) that  will be executed if an AppiumLibrary keyword fails. It is not possible to use a keyword that requires arguments. Using the value &lt;span class="name"&gt;Nothing&lt;/span&gt; will disable this feature altogether.&lt;/p&gt;
+&lt;p&gt;The initial keyword to use is set in &lt;a href="#Importing" class="name"&gt;importing&lt;/a&gt;, and the keyword that is used by default is &lt;a href="#Capture%20Page%20Screenshot" class="name"&gt;Capture Page Screenshot&lt;/a&gt;. Taking a screenshot when something fails is a very useful feature, but notice that it can slow down the execution.&lt;/p&gt;
+&lt;p&gt;This keyword returns the name of the previously registered failure keyword. It can be used to restore the original value later.&lt;/p&gt;
+&lt;p&gt;Examples:&lt;/p&gt;
+&lt;table border="1"&gt;
+&lt;tr&gt;
+&lt;td&gt;Register Keyword To Run On Failure&lt;/td&gt;
+&lt;td&gt;Log Source&lt;/td&gt;
+&lt;td&gt;# Run &lt;a href="#Log%20Source" class="name"&gt;Log Source&lt;/a&gt; on failure.&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;${previous kw}=&lt;/td&gt;
+&lt;td&gt;Register Keyword To Run On Failure&lt;/td&gt;
+&lt;td&gt;Nothing&lt;/td&gt;
+&lt;td&gt;# Disables run-on-failure functionality and stores the previous kw name in a variable.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Register Keyword To Run On Failure&lt;/td&gt;
+&lt;td&gt;${previous kw}&lt;/td&gt;
+&lt;td&gt;# Restore to the previous keyword.&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;p&gt;This run-on-failure functionality only works when running tests on Python/Jython 2.4 or newer and it does not work on IronPython at all.&lt;/p&gt;</doc>
+<shortdoc>Sets the keyword to be executed when an AppiumLibrary keyword fails.</shortdoc>
+</kw>
+<kw name="Remove Application" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_applicationmanagement.py" lineno="101">
+<arguments repr="application_id">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="application_id">
+<name>application_id</name>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Removes the application that is identified by the &lt;code&gt;application_id&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;table border="1"&gt;
+&lt;tr&gt;
+&lt;td&gt;Remove Application&lt;/td&gt;
+&lt;td&gt;com.netease.qa.orangedemo&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;</doc>
+<shortdoc>Removes the application that is identified by the ``application_id``.</shortdoc>
+</kw>
+<kw name="Scroll" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_touch.py" lineno="112">
+<arguments repr="start_locator, end_locator">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="start_locator">
+<name>start_locator</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="end_locator">
+<name>end_locator</name>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Scrolls from the element identified by &lt;code&gt;start_locator&lt;/code&gt; to the element identified by &lt;code&gt;end_locator&lt;/code&gt;. Key attributes for arbitrary elements are &lt;span class="name"&gt;id&lt;/span&gt; and &lt;span class="name"&gt;name&lt;/span&gt;. See &lt;a href="#Introduction" class="name"&gt;introduction&lt;/a&gt; for details about locating elements.&lt;/p&gt;</doc>
+<shortdoc>Scrolls from the element identified by ``start_locator`` to the element identified by ``end_locator``. Key attributes for arbitrary elements are `id` and `name`. See `introduction` for details about locating elements.</shortdoc>
+</kw>
+<kw name="Scroll Down" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_touch.py" lineno="123">
+<arguments repr="locator, timeout: int | timedelta = 0:00:10, retry_interval: int | timedelta = 0:00:01">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="locator">
+<name>locator</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="timeout: int | timedelta = 0:00:10">
+<name>timeout</name>
+<type name="Union" union="true">
+<type name="int" typedoc="integer"/>
+<type name="timedelta" typedoc="timedelta"/>
+</type>
+<default>0:00:10</default>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="retry_interval: int | timedelta = 0:00:01">
+<name>retry_interval</name>
+<type name="Union" union="true">
+<type name="int" typedoc="integer"/>
+<type name="timedelta" typedoc="timedelta"/>
+</type>
+<default>0:00:01</default>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Scrolls down until the element identified by &lt;code&gt;locator&lt;/code&gt; is found or until the &lt;code&gt;timeout&lt;/code&gt; (Android only) is reached.&lt;/p&gt;
+&lt;p&gt;Args:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;locator&lt;/code&gt;: locator of the element to scroll down to&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;timeout&lt;/code&gt;: (Android only) timeout in seconds (default=10s)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;retry_interval&lt;/code&gt;: interval between scroll attempts in seconds (default=1s)&lt;/li&gt;
+&lt;/ul&gt;</doc>
+<shortdoc>Scrolls down until the element identified by ``locator`` is found or until the ``timeout`` (Android only) is reached.</shortdoc>
+</kw>
+<kw name="Scroll Element Into View" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_element.py" lineno="355">
+<arguments repr="locator">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="locator">
+<name>locator</name>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Scrolls the element with the given &lt;code&gt;locator&lt;/code&gt; into view.&lt;/p&gt;
+&lt;p&gt;Args:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;locator&lt;/code&gt;: the locator used to find the requested element.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Key attributes for arbitrary elements are &lt;span class="name"&gt;id&lt;/span&gt; and &lt;span class="name"&gt;name&lt;/span&gt;. See &lt;a href="#Introduction" class="name"&gt;introduction&lt;/a&gt; for details about locating elements.&lt;/p&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;table border="1"&gt;
+&lt;tr&gt;
+&lt;td&gt;Scroll Element Into View&lt;/td&gt;
+&lt;td&gt;css=div.class&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;</doc>
+<shortdoc>Scrolls the element with the given ``locator`` into view.</shortdoc>
+</kw>
+<kw name="Scroll Up" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_touch.py" lineno="168">
+<arguments repr="locator, timeout: int | timedelta = 0:00:10, retry_interval: int | timedelta = 0:00:01">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="locator">
+<name>locator</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="timeout: int | timedelta = 0:00:10">
+<name>timeout</name>
+<type name="Union" union="true">
+<type name="int" typedoc="integer"/>
+<type name="timedelta" typedoc="timedelta"/>
+</type>
+<default>0:00:10</default>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="retry_interval: int | timedelta = 0:00:01">
+<name>retry_interval</name>
+<type name="Union" union="true">
+<type name="int" typedoc="integer"/>
+<type name="timedelta" typedoc="timedelta"/>
+</type>
+<default>0:00:01</default>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Scrolls up until the element identified by the &lt;code&gt;locator&lt;/code&gt; is found or the &lt;code&gt;timeout&lt;/code&gt; (Android only) is reached.&lt;/p&gt;
+&lt;p&gt;Args:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;locator&lt;/code&gt;: locator of the element to scroll up to&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;timeout&lt;/code&gt;: (Android only) timeout in seconds (default=10s)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;retry_interval&lt;/code&gt;: interval between scroll attempts in seconds (default=1s)&lt;/li&gt;
+&lt;/ul&gt;</doc>
+<shortdoc>Scrolls up until the element identified by the ``locator`` is found or the ``timeout`` (Android only) is reached.</shortdoc>
+</kw>
+<kw name="Set Appium Timeout" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_applicationmanagement.py" lineno="118">
+<arguments repr="seconds">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="seconds">
+<name>seconds</name>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Sets the timeout in &lt;code&gt;seconds&lt;/code&gt; used by various keywords.&lt;/p&gt;
+&lt;p&gt;There are several &lt;span class="name"&gt;Wait ...&lt;/span&gt; keywords that take timeout as an argument. All of these timeout arguments are optional. The timeout used by all of them can be set globally using this keyword.&lt;/p&gt;
+&lt;p&gt;The previous timeout value is returned by this keyword and can be used to set the old value back later. The default timeout is 5 seconds, but it can be altered in &lt;a href="#Importing" class="name"&gt;importing&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;table border="1"&gt;
+&lt;tr&gt;
+&lt;td&gt;${orig timeout} =&lt;/td&gt;
+&lt;td&gt;Set Appium Timeout&lt;/td&gt;
+&lt;td&gt;15 seconds&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Open page that loads slowly&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Set Appium Timeout&lt;/td&gt;
+&lt;td&gt;${orig timeout}&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;</doc>
+<shortdoc>Sets the timeout in ``seconds`` used by various keywords.</shortdoc>
+</kw>
+<kw name="Set Location" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_android_utils.py" lineno="162">
+<arguments repr="latitude, longitude, altitude=10">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="latitude">
+<name>latitude</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="longitude">
+<name>longitude</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="altitude=10">
+<name>altitude</name>
+<default>10</default>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Sets the location.&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;Android only.&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;Args:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;latitute&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;longitude&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;altitude&lt;/code&gt; = 10&lt;/li&gt;
+&lt;/ul&gt;</doc>
+<shortdoc>Sets the location.</shortdoc>
+</kw>
+<kw name="Set Network Connection Status" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_android_utils.py" lineno="28">
+<arguments repr="connectionStatus">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="connectionStatus">
+<name>connectionStatus</name>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Sets the network connection status.&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;Android only.&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;Args:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;connectionStatus&lt;/code&gt;: depending on what the network connection should be set to, choose one of the values below.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Possible values:&lt;/p&gt;
+&lt;table border="1"&gt;
+&lt;tr&gt;
+&lt;th&gt;Value&lt;/th&gt;
+&lt;th&gt;Alias&lt;/th&gt;
+&lt;th&gt;Data&lt;/th&gt;
+&lt;th&gt;Wifi&lt;/th&gt;
+&lt;th&gt;Airplane Mode&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;td&gt;(None)&lt;/td&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;(Airplane Mode)&lt;/td&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;(Wifi only)&lt;/td&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;(Data only)&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;6&lt;/td&gt;
+&lt;td&gt;(All network on)&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;table border="1"&gt;
+&lt;tr&gt;
+&lt;td&gt;Set Network Connection Status&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;</doc>
+<shortdoc>Sets the network connection status.</shortdoc>
+</kw>
+<kw name="Set Sleep Between Wait Loop" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_waiting.py" lineno="118">
+<arguments repr="seconds=0.2">
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="seconds=0.2">
+<name>seconds</name>
+<default>0.2</default>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Sets the sleep interval in &lt;code&gt;seconds&lt;/code&gt; used by the &lt;span class="name"&gt;wait until&lt;/span&gt; loop.&lt;/p&gt;
+&lt;p&gt;If you use the remote appium server, the default value is not recommended because it is another 200ms overhead to the network latency and will slow down your test execution.&lt;/p&gt;</doc>
+<shortdoc>Sets the sleep interval in ``seconds`` used by the `wait until` loop.</shortdoc>
+</kw>
+<kw name="Shake" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_applicationmanagement.py" lineno="306">
+<arguments repr="">
+</arguments>
+<doc>&lt;p&gt;Shakes the device.&lt;/p&gt;</doc>
+<shortdoc>Shakes the device.</shortdoc>
+</kw>
+<kw name="Start Activity" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_android_utils.py" lineno="175">
+<arguments repr="appPackage, appActivity, **opts">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="appPackage">
+<name>appPackage</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="appActivity">
+<name>appActivity</name>
+</arg>
+<arg kind="VAR_NAMED" required="false" repr="**opts">
+<name>opts</name>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Starts the given activity intent. It invokes the &lt;span class="name"&gt;am start/ am start-activity&lt;/span&gt; command under the hood. This keyword extends the functionality of the Start Activity app management API. The intent is built with the &lt;code&gt;appPackage&lt;/code&gt; and &lt;code&gt;appActivity&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;Android only.&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;Args:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;appPackage&lt;/code&gt;: package of install app to verify&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;appActivity&lt;/code&gt;: activity that should be launched&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;user&lt;/code&gt;: the user ID for which the service is started (the current user is used by default)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;wait&lt;/code&gt;: set to true if you want to block the method call until the Activity Manager's process returns the control to the system&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;stop&lt;/code&gt;: set to true to force stop the target app before starting the activity&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;windowingMode&lt;/code&gt;: the windowing mode to launch the activity into&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;activityType&lt;/code&gt;: the activity type to launch the activity as&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;action&lt;/code&gt;: action name (actual value for the Activity Manager's &lt;span class="name"&gt;-a&lt;/span&gt; argument)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;uri&lt;/code&gt;: unified resource identifier (actual value for the Activity Manager's &lt;span class="name"&gt;-d&lt;/span&gt; argument)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;mimeType&lt;/code&gt;: the actual value for the Activity Manager's &lt;span class="name"&gt;-t&lt;/span&gt; argument&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;identifier&lt;/code&gt;: optional identifier (actual value for the Activity Manager's &lt;span class="name"&gt;-i&lt;/span&gt; argument)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;categories&lt;/code&gt;: one or more category names (actual value for the Activity Manager's &lt;span class="name"&gt;-c&lt;/span&gt; argument)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;component&lt;/code&gt;: component name (actual value for the Activity Manager's &lt;span class="name"&gt;-n&lt;/span&gt; argument)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;package&lt;/code&gt;: package name (actual value for the Activity Manager's &lt;span class="name"&gt;-p&lt;/span&gt; argument)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;extras&lt;/code&gt;: optional intent arguments, must be represented as an array of arrays, where each subarray item contains two or three string items: value type, key and the value itself&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;flags&lt;/code&gt;: intent startup-specific flags as a hexadecimal string&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For more information please refer to &lt;a href="https://github.com/appium/appium-uiautomator2-driver/blob/master/README.md#mobile-startactivity"&gt;https://github.com/appium/appium-uiautomator2-driver/blob/master/README.md#mobile-startactivity&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;table border="1"&gt;
+&lt;tr&gt;
+&lt;td&gt;Start Activity&lt;/td&gt;
+&lt;td&gt;com.google.android.deskclock&lt;/td&gt;
+&lt;td&gt;com.android.deskclock.DeskClock&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;</doc>
+<shortdoc>Starts the given activity intent. It invokes the `am start/ am start-activity` command under the hood. This keyword extends the functionality of the Start Activity app management API. The intent is built with the ``appPackage`` and ``appActivity``.</shortdoc>
+</kw>
+<kw name="Start Screen Recording" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_screenrecord.py" lineno="16">
+<arguments repr="timeLimit=180s, **options">
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="timeLimit=180s">
+<name>timeLimit</name>
+<default>180s</default>
+</arg>
+<arg kind="VAR_NAMED" required="false" repr="**options">
+<name>options</name>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Starts an asynchronous Screen Recording for the current open application.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;timeLimit&lt;/code&gt; sets the actual time limit of the recorded video.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The default value for both iOS and Android is 180 seconds (3 minutes).&lt;/li&gt;
+&lt;li&gt;The maximum value for Android is 3 minutes.&lt;/li&gt;
+&lt;li&gt;The maximum value for iOS is 10 minutes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;Optional Args&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;bitRate&lt;/code&gt; (Android Only) The video bit rate for the video, in megabits per second. 4 Mbp/s(4000000) is by default for Android API level below 27.                                    20 Mb/s(20000000) for API level 27 and above.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;videoSize&lt;/code&gt; (Android Only) The format is widthxheight. The default value is the                device's native display resolution (if supported), 1280x720 if not. For best                        results, use a size supported by your device's Advanced Video Coding (AVC)                          encoder. For example, "1280x720"&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;bugReport&lt;/code&gt; (Android Only) Set it to true in order to display additional                       information on the video overlay, such as a timestamp, that is helpful in                           videos captured to illustrate bugs. This option is only supported since                             API level 27 (Android O).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;videoQuality&lt;/code&gt; (iOS Only) The video encoding quality (low, medium, high,                       photo - defaults to medium).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;videoFps&lt;/code&gt;         (iOS Only) The Frames Per Second rate of the recorded video.                    Change this value if the resulting video is too slow or too fast. Defaults to 10.                   This can decrease the resulting file size.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;videoScale&lt;/code&gt; (iOS Only) The scaling value to apply. Read                                       &lt;a href="https://trac.ffmpeg.org/wiki/Scaling"&gt;https://trac.ffmpeg.org/wiki/Scaling&lt;/a&gt; for possible values. Example value of 720p                     scaling is '1280:720'. This can decrease/increase the resulting file size.                          No scale is applied by default.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href="#Start%20Screen%20Recording" class="name"&gt;Start Screen Recording&lt;/a&gt; is used hand in hand with &lt;a href="#Stop%20Screen%20Recording" class="name"&gt;Stop Screen Recording&lt;/a&gt;. See &lt;a href="#Stop%20Screen%20Recording" class="name"&gt;Stop Screen Recording&lt;/a&gt; for more details. Examples:&lt;/p&gt;
+&lt;table border="1"&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href="#Start%20Screen%20Recording" class="name"&gt;Start Screen Recording&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;# starts a screen record session&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;....     keyword actions&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href="#Stop%20Screen%20Recording" class="name"&gt;Stop Screen Recording&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;filename=output&lt;/td&gt;
+&lt;td&gt;# saves the recorded session&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;</doc>
+<shortdoc>Starts an asynchronous Screen Recording for the current open application.</shortdoc>
+</kw>
+<kw name="Stop Application" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_applicationmanagement.py" lineno="277">
+<arguments repr="app_id, timeout=5000, include_stderr=True">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="app_id">
+<name>app_id</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="timeout=5000">
+<name>timeout</name>
+<default>5000</default>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="include_stderr=True">
+<name>include_stderr</name>
+<default>True</default>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Stops the app with the &lt;code&gt;app_id&lt;/code&gt; on the device.&lt;/p&gt;</doc>
+<shortdoc>Stops the app with the ``app_id`` on the device.</shortdoc>
+</kw>
+<kw name="Stop Screen Recording" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_screenrecord.py" lineno="68">
+<arguments repr="filename=None, **options">
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="filename=None">
+<name>filename</name>
+<default>None</default>
+</arg>
+<arg kind="VAR_NAMED" required="false" repr="**options">
+<name>options</name>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Gathers the output from the previously started screen recording              to a media file, then embeds it to the log.html(Android Only).&lt;/p&gt;
+&lt;p&gt;Requires an active or exhausted Screen Recording Session. See &lt;a href="#Start%20Screen%20Recording" class="name"&gt;Start Screen Recording&lt;/a&gt; for more details.&lt;/p&gt;
+&lt;h4&gt;Optional Args&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;remotePath&lt;/code&gt; The path to the remote location, where the resulting video should be              uploaded. The following protocols are supported &lt;i&gt;http/https&lt;/i&gt;, ftp. Null or empty                  string value (the default setting) means the content of resulting file should                       be encoded as Base64 and passed as the endpoint response value. An                                  exception will be thrown if the generated media file is too big to fit                              into the available process memory.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;username&lt;/code&gt; The name of the user for the remote authentication.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;password&lt;/code&gt; The password for the remote authentication.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;method&lt;/code&gt; The http multipart upload method name. The &lt;i&gt;PUT&lt;/i&gt; one is used by default.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Examples:&lt;/p&gt;
+&lt;table border="1"&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href="#Start%20Screen%20Recording" class="name"&gt;Start Screen Recording&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;# starts a screen record session&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;....     keyword actions&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href="#Stop%20Screen%20Recording" class="name"&gt;Stop Screen Recording&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;filename=output&lt;/td&gt;
+&lt;td&gt;# saves the recorded session&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;</doc>
+<shortdoc>Gathers the output from the previously started screen recording              to a media file, then embeds it to the log.html(Android Only).</shortdoc>
+</kw>
+<kw name="Swipe" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_touch.py" lineno="22">
+<arguments repr="*, start_x: int | float, start_y: int | float, end_x: int | float, end_y: int | float, duration: int | timedelta = 0:00:01">
+<arg kind="NAMED_ONLY_MARKER" required="false" repr="*">
+</arg>
+<arg kind="NAMED_ONLY" required="true" repr="start_x: int | float">
+<name>start_x</name>
+<type name="Union" union="true">
+<type name="int" typedoc="integer"/>
+<type name="float" typedoc="float"/>
+</type>
+</arg>
+<arg kind="NAMED_ONLY" required="true" repr="start_y: int | float">
+<name>start_y</name>
+<type name="Union" union="true">
+<type name="int" typedoc="integer"/>
+<type name="float" typedoc="float"/>
+</type>
+</arg>
+<arg kind="NAMED_ONLY" required="true" repr="end_x: int | float">
+<name>end_x</name>
+<type name="Union" union="true">
+<type name="int" typedoc="integer"/>
+<type name="float" typedoc="float"/>
+</type>
+</arg>
+<arg kind="NAMED_ONLY" required="true" repr="end_y: int | float">
+<name>end_y</name>
+<type name="Union" union="true">
+<type name="int" typedoc="integer"/>
+<type name="float" typedoc="float"/>
+</type>
+</arg>
+<arg kind="NAMED_ONLY" required="false" repr="duration: int | timedelta = 0:00:01">
+<name>duration</name>
+<type name="Union" union="true">
+<type name="int" typedoc="integer"/>
+<type name="timedelta" typedoc="timedelta"/>
+</type>
+<default>0:00:01</default>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Swipes from one point to another point, for an optional &lt;code&gt;duration&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Args:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;start_x&lt;/code&gt;: x-coordinate at which to start&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;start_y&lt;/code&gt;: y-coordinate at which to start&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;end_x&lt;/code&gt;: x-coordinate at which to stop&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;end_y&lt;/code&gt;: y-coordinate at which to stop&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;duration&lt;/code&gt;: defines the swipe speed as time taken to swipe from point a to point b.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Examples:&lt;/p&gt;
+&lt;table border="1"&gt;
+&lt;tr&gt;
+&lt;td&gt;Swipe&lt;/td&gt;
+&lt;td&gt;start_x=500&lt;/td&gt;
+&lt;td&gt;start_y=100&lt;/td&gt;
+&lt;td&gt;end_x=100&lt;/td&gt;
+&lt;td&gt;end_y=0&lt;/td&gt;
+&lt;td&gt;duration=1s&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Swipe&lt;/td&gt;
+&lt;td&gt;start_x=500&lt;/td&gt;
+&lt;td&gt;start_y=100&lt;/td&gt;
+&lt;td&gt;end_x=100&lt;/td&gt;
+&lt;td&gt;end_y=0&lt;/td&gt;
+&lt;td&gt;duration=100ms&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;</doc>
+<shortdoc>Swipes from one point to another point, for an optional ``duration``.</shortdoc>
+</kw>
+<kw name="Swipe By Percent" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_touch.py" lineno="60">
+<arguments repr="start_x: int | float, start_y: int | float, end_x: int | float, end_y: int | float, duration: int | timedelta = 0:00:01">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="start_x: int | float">
+<name>start_x</name>
+<type name="Union" union="true">
+<type name="int" typedoc="integer"/>
+<type name="float" typedoc="float"/>
+</type>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="start_y: int | float">
+<name>start_y</name>
+<type name="Union" union="true">
+<type name="int" typedoc="integer"/>
+<type name="float" typedoc="float"/>
+</type>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="end_x: int | float">
+<name>end_x</name>
+<type name="Union" union="true">
+<type name="int" typedoc="integer"/>
+<type name="float" typedoc="float"/>
+</type>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="end_y: int | float">
+<name>end_y</name>
+<type name="Union" union="true">
+<type name="int" typedoc="integer"/>
+<type name="float" typedoc="float"/>
+</type>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="duration: int | timedelta = 0:00:01">
+<name>duration</name>
+<type name="Union" union="true">
+<type name="int" typedoc="integer"/>
+<type name="timedelta" typedoc="timedelta"/>
+</type>
+<default>0:00:01</default>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Swipes from one percent of the screen to another percent, for an optional &lt;code&gt;duration&lt;/code&gt;. Normal swipe fails to scale for different screen resolutions, this can be avoided by using this keyword.&lt;/p&gt;
+&lt;p&gt;Args:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;start_x&lt;/code&gt;: x-percent at which to start&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;start_y&lt;/code&gt;: y-percent at which to start&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;end_x&lt;/code&gt;: x-percent distance from start_x at which to stop&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;end_y&lt;/code&gt;: y-percent distance from start_y at which to stop&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;duration&lt;/code&gt;: time to take the swipe&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Examples:&lt;/p&gt;
+&lt;table border="1"&gt;
+&lt;tr&gt;
+&lt;td&gt;Swipe By Percent&lt;/td&gt;
+&lt;td&gt;90&lt;/td&gt;
+&lt;td&gt;50&lt;/td&gt;
+&lt;td&gt;10&lt;/td&gt;
+&lt;td&gt;50&lt;/td&gt;
+&lt;td&gt;# Swipes screen from right to left.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;i&gt;&lt;b&gt;NOTE: &lt;/b&gt;&lt;/i&gt; This also considers swipe acts different between iOS and Android.&lt;/p&gt;</doc>
+<shortdoc>Swipes from one percent of the screen to another percent, for an optional ``duration``. Normal swipe fails to scale for different screen resolutions, this can be avoided by using this keyword.</shortdoc>
+</kw>
+<kw name="Switch Application" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_applicationmanagement.py" lineno="75">
+<arguments repr="index_or_alias">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="index_or_alias">
+<name>index_or_alias</name>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Switches the active application by index or alias.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;index_or_alias&lt;/code&gt; is either application index (an integer) or alias (a string). The index is returned by the &lt;a href="#Open%20Application" class="name"&gt;Open Application&lt;/a&gt; keyword.&lt;/p&gt;
+&lt;p&gt;This keyword returns the index of the previous active application, which can be used to switch back to that application later.&lt;/p&gt;
+&lt;p&gt;Examples:&lt;/p&gt;
+&lt;table border="1"&gt;
+&lt;tr&gt;
+&lt;td&gt;${appium1}=&lt;/td&gt;
+&lt;td&gt;Open Application&lt;/td&gt;
+&lt;td&gt;&lt;a href="http://localhost:4723/wd/hub"&gt;http://localhost:4723/wd/hub&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;alias=MyApp1&lt;/td&gt;
+&lt;td&gt;platformName=iOS&lt;/td&gt;
+&lt;td&gt;platformVersion=7.0&lt;/td&gt;
+&lt;td&gt;deviceName='iPhone Simulator'&lt;/td&gt;
+&lt;td&gt;app=your.app&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;${appium2}=&lt;/td&gt;
+&lt;td&gt;Open Application&lt;/td&gt;
+&lt;td&gt;&lt;a href="http://localhost:4755/wd/hub"&gt;http://localhost:4755/wd/hub&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;alias=MyApp2&lt;/td&gt;
+&lt;td&gt;platformName=iOS&lt;/td&gt;
+&lt;td&gt;platformVersion=7.0&lt;/td&gt;
+&lt;td&gt;deviceName='iPhone Simulator'&lt;/td&gt;
+&lt;td&gt;app=your.app&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Click Element&lt;/td&gt;
+&lt;td&gt;sendHello&lt;/td&gt;
+&lt;td&gt;# Executed on appium running at localhost:4755&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Switch Application&lt;/td&gt;
+&lt;td&gt;${appium1}&lt;/td&gt;
+&lt;td&gt;# Switch using index&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Click Element&lt;/td&gt;
+&lt;td&gt;ackHello&lt;/td&gt;
+&lt;td&gt;# Executed on appium running at localhost:4723&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Switch Application&lt;/td&gt;
+&lt;td&gt;MyApp2&lt;/td&gt;
+&lt;td&gt;# Switch using alias&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Page Should Contain Text&lt;/td&gt;
+&lt;td&gt;ackHello Received&lt;/td&gt;
+&lt;td&gt;# Executed on appium running at localhost:4755&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;</doc>
+<shortdoc>Switches the active application by index or alias.</shortdoc>
+</kw>
+<kw name="Switch To Context" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_applicationmanagement.py" lineno="355">
+<arguments repr="context_name">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="context_name">
+<name>context_name</name>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Switches to a new context with the &lt;code&gt;context_name&lt;/code&gt;.&lt;/p&gt;</doc>
+<shortdoc>Switches to a new context with the ``context_name``.</shortdoc>
+</kw>
+<kw name="Switch To Frame" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_applicationmanagement.py" lineno="359">
+<arguments repr="frame">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="frame">
+<name>frame</name>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Switches focus to the specified &lt;code&gt;frame&lt;/code&gt;, by index, name, or webelement.&lt;/p&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;table border="1"&gt;
+&lt;tr&gt;
+&lt;td&gt;Go To Url&lt;/td&gt;
+&lt;td&gt;&lt;a href="http://www.xxx.com"&gt;http://www.xxx.com&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Switch To Frame&lt;/td&gt;
+&lt;td&gt;iframe_name&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Click Element&lt;/td&gt;
+&lt;td&gt;xpath=//*[@id="online-btn"]&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;</doc>
+<shortdoc>Switches focus to the specified ``frame``, by index, name, or webelement.</shortdoc>
+</kw>
+<kw name="Switch To Parent Frame" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_applicationmanagement.py" lineno="370">
+<arguments repr="">
+</arguments>
+<doc>&lt;p&gt;Switches focus to the parent context. If the current context is the top level browsing context, the context remains unchanged.&lt;/p&gt;</doc>
+<shortdoc>Switches focus to the parent context. If the current context is the top level browsing context, the context remains unchanged.</shortdoc>
+</kw>
+<kw name="Switch To Window" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_applicationmanagement.py" lineno="377">
+<arguments repr="window_name">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="window_name">
+<name>window_name</name>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Switches to a new webview window with the &lt;code&gt;window_name&lt;/code&gt; if the application contains multiple webviews.&lt;/p&gt;</doc>
+<shortdoc>Switches to a new webview window with the ``window_name`` if the application contains multiple webviews.</shortdoc>
+</kw>
+<kw name="Tap" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_touch.py" lineno="300">
+<arguments repr="element: str | list, count: int = 1, duration=0:00:01">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="element: str | list">
+<name>element</name>
+<type name="Union" union="true">
+<type name="str" typedoc="string"/>
+<type name="list" typedoc="list"/>
+</type>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="count: int = 1">
+<name>count</name>
+<type name="int" typedoc="integer"/>
+<default>1</default>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="duration=0:00:01">
+<name>duration</name>
+<default>0:00:01</default>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Taps the &lt;code&gt;element&lt;/code&gt; for &lt;code&gt;count&lt;/code&gt; times over the &lt;code&gt;duration&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Args:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;span class="name"&gt;`element&lt;/span&gt;: locator or coordinates of the element to be tapped&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;count&lt;/code&gt;: number of times the element should be tapped&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;duration&lt;/code&gt;: duration of time to tap (default=1s)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Examples:&lt;/p&gt;
+&lt;table border="1"&gt;
+&lt;tr&gt;
+&lt;td&gt;Tap&lt;/td&gt;
+&lt;td&gt;xpath=//*[@resource-id='login_button']&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Tap&lt;/td&gt;
+&lt;td&gt;xpath=//*[@name='picture']&lt;/td&gt;
+&lt;td&gt;duration=3s&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Tap&lt;/td&gt;
+&lt;td&gt;xpath=//*[@name='picture']&lt;/td&gt;
+&lt;td&gt;count=2&lt;/td&gt;
+&lt;td&gt;duration=1s&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;table border="1"&gt;
+&lt;tr&gt;
+&lt;td&gt;VAR&lt;/td&gt;
+&lt;td&gt;@{coordinates}&lt;/td&gt;
+&lt;td&gt;100&lt;/td&gt;
+&lt;td&gt;270&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;table border="1"&gt;
+&lt;tr&gt;
+&lt;td&gt;Tap&lt;/td&gt;
+&lt;td&gt;${coordinates}&lt;/td&gt;
+&lt;td&gt;count=3&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;</doc>
+<shortdoc>Taps the ``element`` for ``count`` times over the ``duration``. </shortdoc>
+</kw>
+<kw name="Tap With Number Of Taps" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_touch.py" lineno="238">
+<arguments repr="locator, number_of_taps, number_of_touches">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="locator">
+<name>locator</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="number_of_taps">
+<name>number_of_taps</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="number_of_touches">
+<name>number_of_touches</name>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Sends one or more taps with one or more touch points.&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;iOS only.&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;Args:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;number_of_taps&lt;/code&gt;: the number of taps&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;number_of_touches&lt;/code&gt;: the number of touch points&lt;/li&gt;
+&lt;/ul&gt;</doc>
+<shortdoc>Sends one or more taps with one or more touch points.</shortdoc>
+</kw>
+<kw name="Tap With Positions" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_touch.py" lineno="213">
+<arguments repr="duration: int | timedelta = 0:00:00.500000, *locations">
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="duration: int | timedelta = 0:00:00.500000">
+<name>duration</name>
+<type name="Union" union="true">
+<type name="int" typedoc="integer"/>
+<type name="timedelta" typedoc="timedelta"/>
+</type>
+<default>0:00:00.500000</default>
+</arg>
+<arg kind="VAR_POSITIONAL" required="false" repr="*locations">
+<name>locations</name>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Taps on a particular place with up to five fingers, holding for a certain time.&lt;/p&gt;
+&lt;p&gt;Args:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;locations&lt;/code&gt;: an array of tuples representing the x/y coordinates of the fingers to tap. Length can be up to five.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;duration&lt;/code&gt;: length of time to tap (default=1s)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;table border="1"&gt;
+&lt;tr&gt;
+&lt;td&gt;@{firstFinger}&lt;/td&gt;
+&lt;td&gt;create list&lt;/td&gt;
+&lt;td&gt;${100}&lt;/td&gt;
+&lt;td&gt;${500}&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;@{secondFinger}&lt;/td&gt;
+&lt;td&gt;create list&lt;/td&gt;
+&lt;td&gt;${700}&lt;/td&gt;
+&lt;td&gt;${500}&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;@{fingerPositions}&lt;/td&gt;
+&lt;td&gt;create list&lt;/td&gt;
+&lt;td&gt;${firstFinger}&lt;/td&gt;
+&lt;td&gt;${secondFinger}&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Sleep&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Tap with Positions&lt;/td&gt;
+&lt;td&gt;300ms&lt;/td&gt;
+&lt;td&gt;@{fingerPositions}&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;</doc>
+<shortdoc>Taps on a particular place with up to five fingers, holding for a certain time.</shortdoc>
+</kw>
+<kw name="Terminate Application" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_applicationmanagement.py" lineno="267">
+<arguments repr="app_id">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="app_id">
+<name>app_id</name>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Terminates the given app on the device.&lt;/p&gt;
+&lt;p&gt;Args:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;app_id&lt;/code&gt;: bundleId for iOS, package name for Android.&lt;/li&gt;
+&lt;/ul&gt;</doc>
+<shortdoc>Terminates the given app on the device.</shortdoc>
+</kw>
+<kw name="Text Should Be Visible" deprecated="true" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_element.py" lineno="494">
+<arguments repr="text, exact_match=False, loglevel=INFO">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="text">
+<name>text</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="exact_match=False">
+<name>exact_match</name>
+<default>False</default>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="loglevel=INFO">
+<name>loglevel</name>
+<default>INFO</default>
+</arg>
+</arguments>
+<doc>&lt;p&gt;&lt;b&gt;DEPRECATED!!&lt;/b&gt; Use &lt;a href="#Expect%20Text" class="name"&gt;Expect Text&lt;/a&gt; instead Verifies that the element identified by &lt;code&gt;text&lt;/code&gt; is visible.&lt;/p&gt;
+&lt;p&gt;Args:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;text&lt;/code&gt;: the text that should be visible&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;exact_match&lt;/code&gt;: if the exact match should be found, set this argument to &lt;span class="name"&gt;True&lt;/span&gt;.&lt;/li&gt;
+&lt;/ul&gt;</doc>
+<shortdoc>*DEPRECATED!!* Use `Expect Text` instead Verifies that the element identified by ``text`` is visible.</shortdoc>
+</kw>
+<kw name="Toggle Touch Id Enrollment" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_applicationmanagement.py" lineno="299">
+<arguments repr="">
+</arguments>
+<doc>&lt;p&gt;Toggles Touch ID enrolled state on the iOS Simulator.&lt;/p&gt;</doc>
+<shortdoc>Toggles Touch ID enrolled state on the iOS Simulator.</shortdoc>
+</kw>
+<kw name="Touch Id" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_applicationmanagement.py" lineno="289">
+<arguments repr="match=True">
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="match=True">
+<name>match</name>
+<default>True</default>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Simulates Touch ID on the iOS Simulator.`&lt;/p&gt;
+&lt;p&gt;Args:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;match&lt;/code&gt; (boolean): whether the simulated fingerprint is valid (default=True)&lt;/li&gt;
+&lt;/ul&gt;</doc>
+<shortdoc>Simulates Touch ID on the iOS Simulator.`</shortdoc>
+</kw>
+<kw name="Wait Activity" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_android_utils.py" lineno="135">
+<arguments repr="activity, timeout, interval=1">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="activity">
+<name>activity</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="timeout">
+<name>timeout</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="interval=1">
+<name>interval</name>
+<default>1</default>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Waits for an activity: blocks until target activity presents or until the timeout is reached.&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;Android only.&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;Args:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;activity&lt;/code&gt;: target activity&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;timeout&lt;/code&gt;: max wait time, in seconds&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;interval&lt;/code&gt;: sleep interval between retries, in seconds&lt;/li&gt;
+&lt;/ul&gt;</doc>
+<shortdoc>Waits for an activity: blocks until target activity presents or until the timeout is reached.</shortdoc>
+</kw>
+<kw name="Wait Until Element Is Visible" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_waiting.py" lineno="11">
+<arguments repr="locator, timeout=None, error=None">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="locator">
+<name>locator</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="timeout=None">
+<name>timeout</name>
+<default>None</default>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="error=None">
+<name>error</name>
+<default>None</default>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Waits until the element specified by the &lt;code&gt;locator&lt;/code&gt; is visible.&lt;/p&gt;
+&lt;p&gt;Fails if the &lt;code&gt;timeout&lt;/code&gt; expires before the element becomes visible. See the &lt;a href="#Introduction" class="name"&gt;introduction&lt;/a&gt; for more information about the &lt;code&gt;timeout&lt;/code&gt; and its default value.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;error&lt;/code&gt; can be used to override the default error message.&lt;/p&gt;
+&lt;p&gt;See also &lt;a href="#Wait%20Until%20Page%20Contains" class="name"&gt;Wait Until Page Contains&lt;/a&gt;, &lt;a href="#Wait%20Until%20Page%20Contains%20Element" class="name"&gt;Wait Until Page Contains Element&lt;/a&gt;, &lt;span class="name"&gt;Wait For Condition&lt;/span&gt; and BuiltIn keyword &lt;span class="name"&gt;Wait Until Keyword Succeeds&lt;/span&gt;.&lt;/p&gt;</doc>
+<shortdoc>Waits until the element specified by the ``locator`` is visible.</shortdoc>
+</kw>
+<kw name="Wait Until Page Contains" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_waiting.py" lineno="34">
+<arguments repr="text, timeout=None, error=None">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="text">
+<name>text</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="timeout=None">
+<name>timeout</name>
+<default>None</default>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="error=None">
+<name>error</name>
+<default>None</default>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Waits until the &lt;code&gt;text&lt;/code&gt; appears on the current page.&lt;/p&gt;
+&lt;p&gt;Fails if the &lt;code&gt;timeout&lt;/code&gt; expires before the text appears. See the &lt;a href="#Introduction" class="name"&gt;introduction&lt;/a&gt; for more information about the &lt;code&gt;timeout&lt;/code&gt; and its default value.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;error&lt;/code&gt; can be used to override the default error message.&lt;/p&gt;
+&lt;p&gt;See also &lt;a href="#Wait%20Until%20Page%20Does%20Not%20Contain" class="name"&gt;Wait Until Page Does Not Contain&lt;/a&gt;, &lt;a href="#Wait%20Until%20Page%20Contains%20Element" class="name"&gt;Wait Until Page Contains Element&lt;/a&gt;, &lt;a href="#Wait%20Until%20Page%20Does%20Not%20Contain%20Element" class="name"&gt;Wait Until Page Does Not Contain Element&lt;/a&gt; and BuiltIn keyword &lt;span class="name"&gt;Wait Until Keyword Succeeds&lt;/span&gt;.&lt;/p&gt;</doc>
+<shortdoc>Waits until the ``text`` appears on the current page.</shortdoc>
+</kw>
+<kw name="Wait Until Page Contains Element" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_waiting.py" lineno="76">
+<arguments repr="locator, timeout=None, error=None">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="locator">
+<name>locator</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="timeout=None">
+<name>timeout</name>
+<default>None</default>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="error=None">
+<name>error</name>
+<default>None</default>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Waits until the element specified by the &lt;code&gt;locator&lt;/code&gt; appears on the current page.&lt;/p&gt;
+&lt;p&gt;Fails if the &lt;code&gt;timeout&lt;/code&gt; expires before the element appears. See the &lt;a href="#Introduction" class="name"&gt;introduction&lt;/a&gt; for more information about the &lt;code&gt;timeout&lt;/code&gt; and its default value.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;error&lt;/code&gt; can be used to override the default error message.&lt;/p&gt;
+&lt;p&gt;See also &lt;a href="#Wait%20Until%20Page%20Contains" class="name"&gt;Wait Until Page Contains&lt;/a&gt;, &lt;a href="#Wait%20Until%20Page%20Does%20Not%20Contain" class="name"&gt;Wait Until Page Does Not Contain&lt;/a&gt; &lt;a href="#Wait%20Until%20Page%20Does%20Not%20Contain%20Element" class="name"&gt;Wait Until Page Does Not Contain Element&lt;/a&gt; and BuiltIn keyword &lt;span class="name"&gt;Wait Until Keyword Succeeds&lt;/span&gt;.&lt;/p&gt;</doc>
+<shortdoc>Waits until the element specified by the ``locator`` appears on the current page.</shortdoc>
+</kw>
+<kw name="Wait Until Page Does Not Contain" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_waiting.py" lineno="52">
+<arguments repr="text, timeout=None, error=None">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="text">
+<name>text</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="timeout=None">
+<name>timeout</name>
+<default>None</default>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="error=None">
+<name>error</name>
+<default>None</default>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Waits until the &lt;code&gt;text&lt;/code&gt; disappears from the current page.&lt;/p&gt;
+&lt;p&gt;Fails if the &lt;code&gt;timeout&lt;/code&gt; expires before the &lt;code&gt;text&lt;/code&gt; disappears. See the &lt;a href="#Introduction" class="name"&gt;introduction&lt;/a&gt; for more information about &lt;code&gt;timeout&lt;/code&gt; and its default value.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;error&lt;/code&gt; can be used to override the default error message.&lt;/p&gt;
+&lt;p&gt;See also &lt;a href="#Wait%20Until%20Page%20Contains" class="name"&gt;Wait Until Page Contains&lt;/a&gt;, &lt;a href="#Wait%20Until%20Page%20Contains%20Element" class="name"&gt;Wait Until Page Contains Element&lt;/a&gt;, &lt;a href="#Wait%20Until%20Page%20Does%20Not%20Contain%20Element" class="name"&gt;Wait Until Page Does Not Contain Element&lt;/a&gt; and BuiltIn keyword &lt;span class="name"&gt;Wait Until Keyword Succeeds&lt;/span&gt;.&lt;/p&gt;</doc>
+<shortdoc>Waits until the ``text`` disappears from the current page.</shortdoc>
+</kw>
+<kw name="Wait Until Page Does Not Contain Element" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_waiting.py" lineno="94">
+<arguments repr="locator, timeout=None, error=None">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="locator">
+<name>locator</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="timeout=None">
+<name>timeout</name>
+<default>None</default>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="error=None">
+<name>error</name>
+<default>None</default>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Waits until the element specified by the &lt;code&gt;locator&lt;/code&gt; disappears from the current page.&lt;/p&gt;
+&lt;p&gt;Fails if the &lt;code&gt;timeout&lt;/code&gt; expires before the element disappears. See the &lt;a href="#Introduction" class="name"&gt;introduction&lt;/a&gt; for more information about &lt;code&gt;timeout&lt;/code&gt; and its default value.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;error&lt;/code&gt; can be used to override the default error message.&lt;/p&gt;
+&lt;p&gt;See also &lt;a href="#Wait%20Until%20Page%20Contains" class="name"&gt;Wait Until Page Contains&lt;/a&gt;, &lt;a href="#Wait%20Until%20Page%20Does%20Not%20Contain" class="name"&gt;Wait Until Page Does Not Contain&lt;/a&gt;, &lt;a href="#Wait%20Until%20Page%20Contains%20Element" class="name"&gt;Wait Until Page Contains Element&lt;/a&gt; and BuiltIn keyword &lt;span class="name"&gt;Wait Until Keyword Succeeds&lt;/span&gt;.&lt;/p&gt;</doc>
+<shortdoc>Waits until the element specified by the ``locator`` disappears from the current page.</shortdoc>
+</kw>
+<kw name="Xpath Should Match X Times" source="E:\Project\RobotFrameworkStandard\.venv\Lib\site-packages\AppiumLibrary\keywords\_element.py" lineno="507">
+<arguments repr="xpath, count, error=None, loglevel=INFO">
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="xpath">
+<name>xpath</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="true" repr="count">
+<name>count</name>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="error=None">
+<name>error</name>
+<default>None</default>
+</arg>
+<arg kind="POSITIONAL_OR_NAMED" required="false" repr="loglevel=INFO">
+<name>loglevel</name>
+<default>INFO</default>
+</arg>
+</arguments>
+<doc>&lt;p&gt;Verifies that the page contains the given number of elements (&lt;code&gt;count&lt;/code&gt;) located by &lt;code&gt;xpath&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;One should not use the &lt;span class="name"&gt;xpath=&lt;/span&gt; prefix for 'xpath'. XPath is assumed.&lt;/p&gt;
+&lt;table border="1"&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Correct:&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Xpath Should Match X Times&lt;/td&gt;
+&lt;td&gt;//android.view.View[@text='Test']&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Incorrect:&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Xpath Should Match X Times&lt;/td&gt;
+&lt;td&gt;xpath=//android.view.View[@text='Test']&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;code&gt;error&lt;/code&gt; can be used to override the default error message.&lt;/p&gt;
+&lt;p&gt;See &lt;a href="#Log%20Source" class="name"&gt;Log Source&lt;/a&gt; for explanation about &lt;code&gt;loglevel&lt;/code&gt; argument.&lt;/p&gt;</doc>
+<shortdoc>Verifies that the page contains the given number of elements (``count``) located by ``xpath``.</shortdoc>
+</kw>
+</keywords>
+<typedocs>
+<type name="boolean" type="Standard">
+<doc>&lt;p&gt;Strings &lt;code&gt;TRUE&lt;/code&gt;, &lt;code&gt;YES&lt;/code&gt;, &lt;code&gt;ON&lt;/code&gt;, &lt;code&gt;1&lt;/code&gt; and possible localization specific "true strings" are converted to Boolean &lt;code&gt;True&lt;/code&gt;, the empty string, strings &lt;code&gt;FALSE&lt;/code&gt;, &lt;code&gt;NO&lt;/code&gt;, &lt;code&gt;OFF&lt;/code&gt; and &lt;code&gt;0&lt;/code&gt; and possibly localization specific "false strings" are converted to Boolean &lt;code&gt;False&lt;/code&gt;, and the string &lt;code&gt;NONE&lt;/code&gt; is converted to the Python &lt;code&gt;None&lt;/code&gt; object. Other strings and all other values are passed as-is, allowing keywords to handle them specially if needed. All string comparisons are case-insensitive.&lt;/p&gt;
+&lt;p&gt;Examples: &lt;code&gt;TRUE&lt;/code&gt; (converted to &lt;code&gt;True&lt;/code&gt;), &lt;code&gt;off&lt;/code&gt; (converted to &lt;code&gt;False&lt;/code&gt;), &lt;code&gt;example&lt;/code&gt; (used as-is)&lt;/p&gt;</doc>
+<accepts>
+<type>string</type>
+<type>integer</type>
+<type>float</type>
+<type>None</type>
+</accepts>
+<usages>
+<usage>Get Text</usage>
+</usages>
+</type>
+<type name="float" type="Standard">
+<doc>&lt;p&gt;Conversion is done using Python's &lt;a href="https://docs.python.org/library/functions.html#float"&gt;float&lt;/a&gt; built-in function.&lt;/p&gt;
+&lt;p&gt;Spaces and underscores can be used as visual separators for digit grouping purposes.&lt;/p&gt;
+&lt;p&gt;Examples: &lt;code&gt;3.14&lt;/code&gt;, &lt;code&gt;2.9979e8&lt;/code&gt;, &lt;code&gt;10 000.000 01&lt;/code&gt;&lt;/p&gt;</doc>
+<accepts>
+<type>string</type>
+<type>Real</type>
+</accepts>
+<usages>
+<usage>Swipe</usage>
+<usage>Swipe By Percent</usage>
+</usages>
+</type>
+<type name="integer" type="Standard">
+<doc>&lt;p&gt;Conversion is done using Python's &lt;a href="https://docs.python.org/library/functions.html#int"&gt;int&lt;/a&gt; built-in function. Floating point numbers are accepted only if they can be represented as integers exactly. For example, &lt;code&gt;1.0&lt;/code&gt; is accepted and &lt;code&gt;1.1&lt;/code&gt; is not.&lt;/p&gt;
+&lt;p&gt;It is possible to use hexadecimal, octal and binary numbers by prefixing values with &lt;code&gt;0x&lt;/code&gt;, &lt;code&gt;0o&lt;/code&gt; and &lt;code&gt;0b&lt;/code&gt;, respectively. Spaces and underscores can be used as visual separators for digit grouping purposes.&lt;/p&gt;
+&lt;p&gt;Examples: &lt;code&gt;42&lt;/code&gt;, &lt;code&gt;-1&lt;/code&gt;, &lt;code&gt;0b1010&lt;/code&gt;, &lt;code&gt;10 000 000&lt;/code&gt;, &lt;code&gt;0xBAD_C0FFEE&lt;/code&gt;&lt;/p&gt;</doc>
+<accepts>
+<type>string</type>
+<type>float</type>
+</accepts>
+<usages>
+<usage>Flick</usage>
+<usage>Scroll Down</usage>
+<usage>Scroll Up</usage>
+<usage>Swipe</usage>
+<usage>Swipe By Percent</usage>
+<usage>Tap</usage>
+<usage>Tap With Positions</usage>
+</usages>
+</type>
+<type name="list" type="Standard">
+<doc>&lt;p&gt;Strings must be Python &lt;a href="https://docs.python.org/library/stdtypes.html#list"&gt;list&lt;/a&gt; or &lt;a href="https://docs.python.org/library/stdtypes.html#tuple"&gt;tuple&lt;/a&gt; literals. They are converted using the &lt;a href="https://docs.python.org/library/ast.html#ast.literal_eval"&gt;ast.literal_eval&lt;/a&gt; function and possible tuples converted further to lists. They can contain any values &lt;code&gt;ast.literal_eval&lt;/code&gt; supports, including lists and other collections.&lt;/p&gt;
+&lt;p&gt;If the argument is a list, it is used without conversion. Tuples and other sequences are converted to lists.&lt;/p&gt;
+&lt;p&gt;If the type has nested types like &lt;code&gt;list[int]&lt;/code&gt;, items are converted to those types automatically.&lt;/p&gt;
+&lt;p&gt;Examples: &lt;code&gt;['one', 'two']&lt;/code&gt;, &lt;code&gt;[('one', 1), ('two', 2)]&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Support to convert nested types is new in Robot Framework 6.0. Support for tuple literals is new in Robot Framework 7.4.&lt;/p&gt;</doc>
+<accepts>
+<type>string</type>
+<type>Sequence</type>
+</accepts>
+<usages>
+<usage>Tap</usage>
+</usages>
+</type>
+<type name="Literal" type="Standard">
+<doc>&lt;p&gt;Only specified values are accepted. Values can be strings, integers, bytes, Booleans, enums and None, and used arguments are converted using the value type specific conversion logic.&lt;/p&gt;
+&lt;p&gt;Strings are case, space, underscore and hyphen insensitive, but exact matches have precedence over normalized matches.&lt;/p&gt;</doc>
+<accepts>
+<type>Any</type>
+</accepts>
+<usages>
+<usage>Expect Element</usage>
+<usage>Expect Text</usage>
+</usages>
+</type>
+<type name="None" type="Standard">
+<doc>&lt;p&gt;String &lt;code&gt;NONE&lt;/code&gt; (case-insensitive) and the empty string are converted to the Python &lt;code&gt;None&lt;/code&gt; object. Other values cause an error.&lt;/p&gt;
+&lt;p&gt;Converting the empty string is new in Robot Framework 7.4.&lt;/p&gt;</doc>
+<accepts>
+<type>string</type>
+</accepts>
+<usages>
+<usage>Expect Element</usage>
+<usage>Expect Text</usage>
+<usage>Get Device Time</usage>
+</usages>
+</type>
+<type name="string" type="Standard">
+<doc>&lt;p&gt;All arguments are converted to Unicode strings.&lt;/p&gt;
+&lt;p&gt;Most values are converted simply by using &lt;code&gt;str(value)&lt;/code&gt;. An exception is that bytes are mapped directly to Unicode code points with same ordinals. This means that, for example, &lt;code&gt;b"hyv\xe4"&lt;/code&gt; becomes &lt;code&gt;"hyvä"&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Converting bytes specially is new Robot Framework 7.4.&lt;/p&gt;</doc>
+<accepts>
+<type>Any</type>
+</accepts>
+<usages>
+<usage>Drag And Drop</usage>
+<usage>Expect Element</usage>
+<usage>Expect Text</usage>
+<usage>Get Device Time</usage>
+<usage>Tap</usage>
+</usages>
+</type>
+<type name="timedelta" type="Standard">
+<doc>&lt;p&gt;Strings are expected to represent a time interval in one of the time formats Robot Framework supports:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;a number representing seconds like &lt;code&gt;42&lt;/code&gt; or &lt;code&gt;10.5&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;a time string like &lt;code&gt;1 hour 2 seconds&lt;/code&gt; or &lt;code&gt;1h 2s&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;a "timer" string like &lt;code&gt;01:02&lt;/code&gt; (1 minute 2 seconds) or &lt;code&gt;01:00:03&lt;/code&gt; (1 hour 3 seconds)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Integers and floats are considered to be seconds.&lt;/p&gt;
+&lt;p&gt;See the &lt;a href="https://robotframework.org/robotframework/"&gt;Robot Framework User Guide&lt;/a&gt; for more details about the supported time formats.&lt;/p&gt;</doc>
+<accepts>
+<type>string</type>
+<type>integer</type>
+<type>float</type>
+</accepts>
+<usages>
+<usage>Scroll Down</usage>
+<usage>Scroll Up</usage>
+<usage>Swipe</usage>
+<usage>Swipe By Percent</usage>
+<usage>Tap With Positions</usage>
+</usages>
+</type>
+</typedocs>
+</keywordspec>

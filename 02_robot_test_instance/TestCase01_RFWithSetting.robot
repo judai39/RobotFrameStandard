@@ -50,8 +50,8 @@ Normal TestCase
 
 
 *** Settings ***
-Library    ../.venv/Lib/site-packages/SeleniumLibrary/__init__.py
-Library    ../.venv/Lib/site-packages/AppiumLibrary/__init__.py
+Library    SeleniumLibrary
+Library    AppiumLibrary
 # Test Setup    Open Application    App A
 # Test Teardown    Close All Applications
 

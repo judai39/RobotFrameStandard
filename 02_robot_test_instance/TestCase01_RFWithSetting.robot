@@ -30,8 +30,8 @@ Default values
     Log To Console    "将会使用settings中的默认test setup事件"
 Using variables
     [Documentation]    Setup and teardown specified using variables
-    [Setup]    Open Application    App B
-    Log To Console    "使用自定义事件"
+    [Setup]    Open Application    http://localhost:4723    Android
+    Log To Console    "打开安卓应用应用"
     [Teardown]    Close All Applications
 
 # 3、测试模板用法

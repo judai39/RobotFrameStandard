@@ -20,7 +20,7 @@
                 // "basic",
                 "--timestampoutputs",
                 "--outputdir",
-                "logs",
+                "logs\report",
                 // "--loglevel",
                 // "TRACE",
                 // "--listener=EventsListener.EventsListenerV4"

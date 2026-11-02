@@ -10,10 +10,15 @@ ${MESSAGE}        Hello, world!
 My Test
     [Documentation]    Example test.
     Log    ${MESSAGE}
+    # ${CURDIR} → 当前目录
     My Keyword    ${CURDIR}
 
 Another Test
-    [Documentation]    如果需要将制表符或者空格符作为参数传入(empty为何失效)
+    [Documentation]    一些特殊语义字符
+    # \t → 制表符
+    # \xA0 → 不间断空格
+    # ${SPACE} → 一个空格
+    # ${EMPTY} → 空字符串 ""
     Log    I\thave\xA0a${SPACE}apple${EMPTY}juice
 
 *** Keywords ***

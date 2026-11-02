@@ -1,20 +1,16 @@
 *** Test Cases ***
 # 1、tags用法
 Testcase1
-    [Documentation]    Another dummy test
-    [Tags]    dummy    owner-haoyudu
+    [Documentation]    Panshu的测试用例
+    [Tags]    CASE_NO=T129_P23639    Panshu
     Log    Hello,world!
 Testcase2
-    [Documentation]    Another dummy test
-    [Tags]    dummy    owner-haoyudu
+    [Documentation]    Hygon的测试用例(基本功能)
+    [Tags]    Basic    CASE_NO=T129_P8803    Hygon
     Log    Hello,world!
 Testcase3
-    [Documentation]    Another dummy test
-    [Tags]    dummy    owner-haoyudu
-    Log    Hello,world!
-Testcase4
-    [Documentation]    Another dummy test
-    [Tags]    dummy    owner-小明
+    [Documentation]    AMD的测试用例
+    [Tags]    weight=3.0    CASE_NO=T129_P19350    AMD
     Log    Hello,world!
 # 尝试命令行执行
 # 只执行smoke标签的测试
@@ -25,6 +21,8 @@ Testcase4
 # robot --include smokeORregression tests/
 # 组合条件
 # robot --include critical --exclude wip tests/
+
+# 除此之外，可以在.vscode/launch.json中配置参数，方便调试
 
 # 2、初始化与清理用法
 Default values

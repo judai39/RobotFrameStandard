@@ -1,0 +1,30 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "robotframework-lsp",
+            "name": "Robot Framework: Launch Template",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "target": "${file}",
+            "terminal": "integrated",
+            "env": {},
+            "args": [
+                // "--exclude",
+                // 执行AMD用例解除Intel的注释，执行Intel用例解除AMD的注释
+                // "Intel",
+                // "AMD",
+                // "串口",
+                // 执行基本功能用例解开下面两行注释
+                // "--include",
+                // "basic",
+                "--timestampoutputs",
+                "--outputdir",
+                "logs",
+                // "--loglevel",
+                // "TRACE",
+                // "--listener=EventsListener.EventsListenerV4"
+            ]
+        }
+    ]
+}
